@@ -7,7 +7,13 @@ export default function DayBlock(props: { block: Block }) {
   return (
     <div className={styles.block}>
       <h5>{`${block.dt_txt.getMonth() + 1}/${block.dt_txt.getDate()}`}</h5>
-      <h5>{`${block.dt_txt.getHours()}:00`}</h5>
+      <h5>{`${
+        block.dt_txt
+          .toLocaleString(undefined, {
+            timeZone: "Asia/Tokyo",
+          })
+          .split(",")[1]
+      }`}</h5>
       <Image
         width={50}
         height={50}
