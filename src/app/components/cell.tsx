@@ -1,17 +1,17 @@
-import { Block, Weather } from "../model";
+import { Forecast, Weather } from "../model";
 import populateCell from "../utils/populate-cell";
 import styles from "../page.module.css";
-import DayBlock from "./day-block";
+import ForecastBlock from "./forecast-block";
 
 export default function Cell(props: {
   dayFromToday: number;
   weather: Weather;
 }) {
   const { dayFromToday, weather } = props;
-  const weatherByDay: Block[] = populateCell(dayFromToday, weather);
+  const weatherByDay: Forecast[] = populateCell(dayFromToday, weather);
 
   const blocks = weatherByDay.map((block, index) => (
-    <DayBlock block={block} key={index} />
+    <ForecastBlock forecast={block} key={index} />
   ));
 
   return (

@@ -15,13 +15,13 @@ export default function calculateFromUTCDate(date: string) {
 
   // Format the UTC time in Japan Standard Time
   const jstTimeString = jstFormatter.format(utcNow);
-  const currentDay = new Date(jstTimeString).getDate();
-  const incomingDateTimeString = jstFormatter.format(utcDate);
-  const localDate = new Date(incomingDateTimeString);
+  const today = new Date(jstTimeString).getDate();
+  const transformedIncomingDate = jstFormatter.format(utcDate);
+  const localDate = new Date(transformedIncomingDate);
   const incomingDay = localDate.getDate();
 
   return {
-    dayFromToday: incomingDay - currentDay,
+    dayFromToday: incomingDay - today,
     localDate,
   };
 }

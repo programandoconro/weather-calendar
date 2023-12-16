@@ -1,10 +1,10 @@
-import { Block, Weather } from "../model";
+import { Forecast, Weather } from "../model";
 import calculateFromUTCDate from "./calculate-date";
 
 export default function populateCell(
   dayFromToday: number,
   weather: Weather
-): Block[] {
+): Forecast[] {
   if (!Array.isArray(weather)) return [];
   const result = [];
   for (let dayWeather of weather) {
@@ -16,6 +16,7 @@ export default function populateCell(
         icon: dayWeather.weather[0].icon,
         wind: dayWeather.wind.speed,
         description: dayWeather.weather[0].description,
+        main: dayWeather.weather[0].main,
       });
     }
   }
