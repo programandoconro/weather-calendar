@@ -15,7 +15,7 @@ export default function ForecastBlock(props: { forecast: Forecast }) {
       <h5>{`${
         forecast.dt_txt.getMonth() + 1
       }/${forecast.dt_txt.getDate()}`}</h5>
-      <h5>{`${forecast.dt_txt}`}</h5>
+      <h5>{`${forecast.dt_txt.toLocaleString().split(",")[1]}`}</h5>
       <Image
         width={50}
         height={50}
