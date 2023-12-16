@@ -7,9 +7,7 @@ export async function fetchWeather() {
     const response = await fetch(
       `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APPID}&units=metric`,
       {
-        next: {
-          revalidate: 60,
-        },
+        cache: "no-store",
       }
     );
     if (!response.ok) {
