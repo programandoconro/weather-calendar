@@ -17,8 +17,12 @@ export default function Cell(props: {
 
   return (
     <div className={styles.cell} key={dayFromToday}>
-      <h2>{getDayOfWeek(dayFromToday)}</h2>
-      {blocks}
+      {weatherByDay.length > 0 && (
+        <>
+          <h2>{getDayOfWeek(dayFromToday)}</h2>
+          {blocks}
+        </>
+      )}
     </div>
   );
 }
