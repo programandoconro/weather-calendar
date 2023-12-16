@@ -2,6 +2,7 @@ import { Forecast, Weather } from "../model";
 import populateCell from "../utils/populate-cell";
 import styles from "../page.module.css";
 import ForecastBlock from "./forecast-block";
+import { getDayOfWeek } from "../utils/get-day-of-week";
 
 export default function Cell(props: {
   dayFromToday: number;
@@ -10,19 +11,13 @@ export default function Cell(props: {
   const { dayFromToday, weather } = props;
   const weatherByDay: Forecast[] = populateCell(dayFromToday, weather);
 
-  const blocks = weatherByDay.map((block, index) => (
-    <ForecastBlock forecast={block} key={index} />
+  const blocks = weatherByDay.map((forecast, index) => (
+    <ForecastBlock forecast={forecast} key={index} />
   ));
 
   return (
     <div className={styles.cell} key={dayFromToday}>
-      <h2>
-        {dayFromToday === 0
-          ? "今日"
-          : dayFromToday === 1
-          ? "明日"
-          : `${dayFromToday}日後`}
-      </h2>
+      <h2>{getDayOfWeek(dayFromToday)}</h2>
       {blocks}
     </div>
   );

@@ -2,7 +2,17 @@ export default function calculateFromUTCDate(date: string) {
   const utcDate = new Date(date + "Z");
   const utcNow = new Date();
 
-  // Create an Intl.DateTimeFormat object with Japanese locale and Asia/Tokyo time zone
+  const today = transformUtcToJapanTime(utcNow).getDate();
+  const localDate = transformUtcToJapanTime(utcDate);
+  const incomingDay = localDate.getDate();
+
+  return {
+    dayFromToday: incomingDay - today,
+    localDate,
+  };
+}
+
+export function transformUtcToJapanTime(utcDate: Date) {
   const jstFormatter = new Intl.DateTimeFormat("ja-JP", {
     timeZone: "Asia/Tokyo",
     year: "numeric",
@@ -12,16 +22,8 @@ export default function calculateFromUTCDate(date: string) {
     minute: "numeric",
     second: "numeric",
   });
+  const jstTimeString = jstFormatter.format(utcDate);
+  const japanTime = new Date(jstTimeString);
 
-  // Format the UTC time in Japan Standard Time
-  const jstTimeString = jstFormatter.format(utcNow);
-  const today = new Date(jstTimeString).getDate();
-  const transformedIncomingDate = jstFormatter.format(utcDate);
-  const localDate = new Date(transformedIncomingDate);
-  const incomingDay = localDate.getDate();
-
-  return {
-    dayFromToday: incomingDay - today,
-    localDate,
-  };
+  return japanTime;
 }
