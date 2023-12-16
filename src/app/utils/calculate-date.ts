@@ -17,10 +17,11 @@ export default function calculateFromUTCDate(date: string) {
   const jstTimeString = jstFormatter.format(utcNow);
   const currentDay = new Date(jstTimeString).getDate();
   const incomingDateTimeString = jstFormatter.format(utcDate);
-  const incomingDay = new Date(incomingDateTimeString).getDate();
+  const localDate = new Date(incomingDateTimeString);
+  const incomingDay = localDate.getDate();
 
   return {
     dayFromToday: incomingDay - currentDay,
-    localDate: utcDate,
+    localDate,
   };
 }
