@@ -1,19 +1,19 @@
-import Cell from "./components/cell";
+import Day from "./components/day";
 import styles from "./page.module.css";
-import { getData } from "./utils/get-data";
+import { fetchWeather } from "./utils/fetch-weather";
 
 export default async function Home() {
-  const data = await getData();
+  const weather = await fetchWeather();
 
-  const cells = [0, 1, 2, 3, 4].map((dayFromToday) => {
-    return Cell({ dayFromToday, weather: data });
+  const days = [0, 1, 2, 3, 4].map((dayIndex) => {
+    return Day({ dayIndex, weather });
   });
   return (
     <div>
       <title>Weather Calendar</title>
 
       <main className={styles.main}>
-        <div className={styles.calendar}>{cells}</div>
+        <div className={styles.calendar}>{days}</div>
       </main>
     </div>
   );

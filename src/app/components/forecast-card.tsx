@@ -1,7 +1,7 @@
 import { Forecast } from "../model";
 import Image from "next/image";
 import styles from "../page.module.css";
-import { mapBackgroundToWeather } from "../utils/map-background-to-weather";
+import { weatherBackgroundColor } from "../utils/weather-background-color";
 
 export default function ForecastBlock(props: { forecast: Forecast }) {
   const { forecast } = props;
@@ -9,7 +9,7 @@ export default function ForecastBlock(props: { forecast: Forecast }) {
     <div
       className={styles.forecast}
       style={{
-        backgroundColor: `${mapBackgroundToWeather(forecast.main)}`,
+        backgroundColor: `${weatherBackgroundColor(forecast.main)}`,
       }}
     >
       <h5>{`${

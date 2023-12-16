@@ -1,6 +1,6 @@
 import { Forecast } from "../model";
 
-export function mapBackgroundToWeather(weather: Forecast["main"]) {
+export function weatherBackgroundColor(weather: Forecast["main"]) {
   switch (weather) {
     case "Clear": {
       return "blue";

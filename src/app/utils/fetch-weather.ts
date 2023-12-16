@@ -1,4 +1,4 @@
-export async function getData() {
+export async function fetchWeather() {
   const lat = process.env.LAT;
   const lon = process.env.LON;
   const APPID = process.env.API_KEY;
