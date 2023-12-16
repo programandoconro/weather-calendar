@@ -12,10 +12,10 @@ export function mapBackgroundToWeather(weather: Forecast["main"]) {
       return "red";
     }
     case "Snow": {
-      return "black";
+      return "lightgray";
     }
     default: {
-      return "gray";
+      return "black";
     }
   }
 }
