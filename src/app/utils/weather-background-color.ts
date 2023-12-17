@@ -6,10 +6,10 @@ export function weatherBackgroundColor(weather: Forecast["main"]) {
       return "blue";
     }
     case "Clouds": {
-      return "purple";
+      return "gray";
     }
     case "Rain": {
-      return "red";
+      return "purple";
     }
     case "Snow": {
       return "lightgray";
