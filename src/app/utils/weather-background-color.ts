@@ -1,21 +1,24 @@
+import { CSSProperties } from "react";
 import { Forecast } from "../model";
 
-export function weatherBackgroundColor(weather: Forecast["main"]) {
+export function weatherBackgroundColor(
+  weather: Forecast["main"]
+): CSSProperties["color"] {
   switch (weather) {
     case "Clear": {
-      return "blue";
+      return "#444488";
     }
     case "Clouds": {
-      return "gray";
+      return "#444";
     }
     case "Rain": {
-      return "purple";
+      return "#222";
     }
     case "Snow": {
       return "lightgray";
     }
     default: {
-      return "black";
+      return "darkred";
     }
   }
 }
