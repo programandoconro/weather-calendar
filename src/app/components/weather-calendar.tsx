@@ -15,7 +15,6 @@ export default function WeatherCalendar(props: { initialData: Weather }) {
 
       setWeather(json.data);
     }
-    fetchForecast();
     const fetchInterval = setInterval(() => fetchForecast(), 1000 * 60);
 
     return () => clearInterval(fetchInterval);

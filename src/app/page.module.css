@@ -39,7 +39,7 @@
 }
 
 .day h2 {
-  color: whitesmoke;
+  color: var(--dark-purple);
   width: 100%;
 }
 
