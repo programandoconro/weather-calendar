@@ -10,7 +10,9 @@ export default function WeatherCalendar(props: { initialData: Weather }) {
 
   useEffect(() => {
     async function fetchForecast() {
-      const response = await fetch("api/forecast");
+      const response = await fetch("api/forecast", {
+        cache: "no-store",
+      });
       const json = await response.json();
 
       setWeather(json.data);
