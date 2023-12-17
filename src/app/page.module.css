@@ -42,7 +42,7 @@
 }
 
 .description:hover {
-  .dialog {
+  .popup {
     opacity: 1;
   }
 }
@@ -52,15 +52,22 @@
   width: 100%;
 }
 
-.dialog {
+.popup {
   top: 50%;
   left: 50%;
   border: none;
   padding: 5px;
   border-radius: 5px;
   position: absolute;
-  opacity: 0;
   transition: opacity 0.3s ease-in-out;
+  background-color: whitesmoke;
+  color: var(--dark-purple);
+  font-weight: 600;
+  width: fit-content;
+  opacity: 0;
+}
+.forecast .wind {
+  transform: translateY(4px);
 }
 
 @media (max-width: 800px) {
