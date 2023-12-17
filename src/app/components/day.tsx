@@ -13,7 +13,7 @@ export default function Day(props: { dayIndex: number; weather: Weather }) {
   ));
 
   return (
-    <div className={styles.cell} key={dayIndex}>
+    <div className={styles.day} key={dayIndex}>
       {weatherByDay.length > 0 && (
         <>
           <h2>{dayOfWeek(dayIndex)}</h2>

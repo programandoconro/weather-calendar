@@ -3,7 +3,7 @@
   padding: 10px 0;
 }
 
-.cell {
+.day {
   display: flex;
   flex-wrap: wrap;
   width: 90%;
@@ -13,12 +13,12 @@
   cursor: default;
   justify-content: flex-start;
 }
-.cell:first-child {
+.day:first-child {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-.cell:last-child {
+.day:last-child {
   border: none;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -38,13 +38,13 @@
   margin-left: 70px;
 }
 
-.cell h2 {
+.day h2 {
   color: whitesmoke;
   width: 100%;
 }
 
 @media (max-width: 800px) {
-  .cell {
+  .day {
     display: grid;
     text-align: center;
     justify-content: normal;
@@ -61,7 +61,7 @@
   }
 }
 @media (min-width: 1800px) {
-  .cell {
+  .day {
     width: 70%;
   }
 }
