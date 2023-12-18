@@ -13,6 +13,7 @@
   cursor: default;
   justify-content: flex-start;
   opacity: 0.95;
+  max-width: 1300px;
 }
 .day:first-child {
   border-top-left-radius: 5px;
