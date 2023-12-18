@@ -1,7 +1,6 @@
 .calendar {
   width: 100%;
   padding: 10px 0;
-  background-color: #002e7a;
 }
 
 .day {
@@ -27,7 +26,6 @@
 }
 
 .forecast {
-  border: 2px solid var(--dark-purple);
   text-align: center;
   min-width: 150px;
   border-radius: 5px;
