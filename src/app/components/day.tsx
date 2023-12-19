@@ -13,13 +13,13 @@ export default function Day(props: { dayIndex: number; weather: Weather }) {
   ));
 
   return (
-    <div className={styles.day} key={dayIndex}>
+    <>
       {weatherByDay.length > 0 && (
-        <>
+        <div className={styles.day} key={dayIndex}>
           <h2>{dayOfWeek(dayIndex)}</h2>
           {blocks}
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
