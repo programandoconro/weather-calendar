@@ -30,8 +30,8 @@ export default function WeatherCalendar(props: { initialData: Weather }) {
     <div>
       <title>Weather Calendar</title>
 
-      <main className={styles.main}>
-        <div className={styles.calendar}>{days}</div>
+      <main className={styles.calendar}>
+        <div className={styles.card}>{days}</div>
       </main>
     </div>
   );

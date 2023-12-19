@@ -14,6 +14,5 @@ body {
 }
 
 body {
-  background: linear-gradient(var(--dark-purple), rgb(21, 12, 31));
-  background-attachment: fixed;
+  background-color: #191728;
 }
