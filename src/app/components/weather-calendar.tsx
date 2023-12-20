@@ -23,7 +23,7 @@ export default function WeatherCalendar(props: { initialData: Weather }) {
   }, []);
 
   const days = [0, 1, 2, 3, 4].map((dayIndex) => {
-    return Day({ dayIndex, weather });
+    return <Day key={dayIndex} dayIndex={dayIndex} weather={weather} />;
   });
 
   return (

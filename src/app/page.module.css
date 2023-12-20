@@ -44,6 +44,9 @@
     opacity: 1;
   }
 }
+.description {
+  max-height: 50px;
+}
 
 .day h2 {
   color: whitesmoke;
@@ -64,6 +67,9 @@
   width: fit-content;
   opacity: 0;
 }
+.description img {
+  transform: translateY(2px);
+}
 .forecast .wind {
   transform: translateY(4px);
 }
@@ -83,6 +89,12 @@
     padding: 10px;
     align-items: center;
     margin: 0px;
+  }
+  .forecast .time {
+    width: 80px;
+  }
+  .forecast .temp {
+    width: 100px;
   }
 }
 @media (min-width: 1800px) {
