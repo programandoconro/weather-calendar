@@ -72,6 +72,7 @@
 }
 .forecast .wind {
   transform: translateY(4px);
+  width: 80px;
 }
 
 @media (max-width: 800px) {
@@ -82,6 +83,9 @@
     padding: 10px;
     width: 90%;
     gap: 10px;
+  }
+  .card {
+    width: 95%;
   }
   .forecast {
     display: flex;
@@ -94,7 +98,13 @@
     width: 80px;
   }
   .forecast .temp {
-    width: 100px;
+    width: 80px;
+  }
+}
+@media (max-width: 500px) {
+  .card {
+    width: 95%;
+    padding: 0;
   }
 }
 @media (min-width: 1800px) {
