@@ -30,7 +30,7 @@
   min-width: 150px;
   border-radius: 5px;
   color: whitesmoke;
-  box-shadow: rgba(0, 0, 0, 0.5) 5px 2px 7px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 7px;
   margin: 8px 10px 8px 0;
   position: relative;
 }
