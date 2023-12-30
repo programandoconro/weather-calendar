@@ -2,13 +2,14 @@ export default function calculateFromUTCDate(date: string) {
   const utcDate = new Date(date + "Z");
   const utcNow = new Date();
 
-  const today = utcToJapanTime(utcNow).getDate();
-  const localDate = utcToJapanTime(utcDate);
-  const incomingDay = localDate.getDate();
+  const japanTimeFromIncomingUtcDate = utcToJapanTime(utcDate);
+  const timeNow = utcToJapanTime(utcNow);
+  const dateDiff = Number(japanTimeFromIncomingUtcDate) - Number(timeNow);
+  const dayFromToday = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
 
   return {
-    dayFromToday: incomingDay - today,
-    localDate,
+    dayFromToday,
+    localDate: japanTimeFromIncomingUtcDate,
   };
 }
 
