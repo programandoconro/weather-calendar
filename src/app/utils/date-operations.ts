@@ -4,7 +4,10 @@ export default function calculateFromUTCDate(date: string) {
 
   const japanTimeFromIncomingUtcDate = utcToJapanTime(utcDate);
   const timeNow = utcToJapanTime(utcNow);
-  const dateDiff = Number(japanTimeFromIncomingUtcDate) - Number(timeNow);
+  const dateDiff =
+    Number(japanTimeFromIncomingUtcDate) -
+    Number(timeNow) +
+    1000 * 60 * 60 * 23;
   const dayFromToday = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
 
   return {
