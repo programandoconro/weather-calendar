@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Weather Calendar",
-  description: "Get weather forecast for next 4 days",
+  description: "Get weather forecast for the next 4 days",
 };
 
 export default function RootLayout({

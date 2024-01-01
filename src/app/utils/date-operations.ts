@@ -4,11 +4,10 @@ export default function calculateFromUTCDate(date: string) {
 
   const japanTimeFromIncomingUtcDate = utcToJapanTime(utcDate);
   const timeNow = utcToJapanTime(utcNow);
-  const dateDiff =
-    Number(japanTimeFromIncomingUtcDate) -
-    Number(timeNow) +
-    1000 * 60 * 60 * 23;
-  const dayFromToday = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
+  const timeDiff =
+    (Number(japanTimeFromIncomingUtcDate) - Number(timeNow)) /
+    (1000 * 60 * 60 * 24);
+  const dayFromToday = Math.round(timeDiff);
 
   return {
     dayFromToday,
@@ -38,12 +37,12 @@ export function dayOfWeek(dayFromToday: number) {
   const utcDate = new Date().toUTCString();
   const day = utcToJapanTime(new Date(utcDate));
 
-  switch (dayFromToday) {
-    case 0: {
+  switch (dayFromToday.toFixed(0)) {
+    case "0": {
       const today = day.getDay();
       return `今日（${WEEK_DAYS[today]}）`;
     }
-    case 1: {
+    case "1": {
       day.setDate(day.getDate() + 1);
       const tomorrow = day.getDay();
       return `明日（${WEEK_DAYS[tomorrow]}）`;
