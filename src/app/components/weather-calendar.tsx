@@ -5,15 +5,25 @@ import Day from "./day";
 import styles from "../page.module.css";
 import groupByday from "../utils/group-by-day";
 
-export default function WeatherCalendar(props: { initialData: Weather[] }) {
-  const [weather, setWeather] = useState<Weather[]>(props.initialData);
+export default function WeatherCalendar(props: {
+  initialWeather: Weather[];
+  day: number;
+}) {
+  const [weather, setWeather] = useState<Weather[]>(props.initialWeather);
+  const [dayOfWeek, setDayOfWeek] = useState<number>(props.day);
 
   useEffect(() => {
     async function fetchForecast() {
+      const timeResponse = await fetch("api/time", {
+        cache: "no-store",
+      });
+      const timeJson = await timeResponse.json();
       const response = await fetch("api/forecast", {
         cache: "no-store",
       });
       const json = await response.json();
+      const dayNumber = timeJson?.data?.day_of_week;
+      setDayOfWeek(Number(dayNumber));
       const data: Weather = json.data;
       const transformedData = groupByday(data);
 
@@ -27,7 +37,9 @@ export default function WeatherCalendar(props: { initialData: Weather[] }) {
   const daysToForecast = [0, 1, 2, 3, 4, 5];
 
   const days = daysToForecast.map((dayIndex) => {
-    return <Day key={dayIndex} weather={weather[dayIndex]} />;
+    return (
+      <Day key={dayIndex} weather={weather[dayIndex]} dayOfToday={dayOfWeek} />
+    );
   });
 
   return (

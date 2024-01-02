@@ -4,8 +4,8 @@ import styles from "../page.module.css";
 import ForecastBlock from "./forecast-card";
 import { dayOfWeek } from "../utils/day-of-week";
 
-export default function Day(props: { weather: Weather }) {
-  const { weather } = props;
+export default function Day(props: { weather: Weather; dayOfToday: number }) {
+  const { weather, dayOfToday } = props;
   if (!weather) return;
 
   const weatherByDay: Forecast[] = reduceDayForecasts(weather);
@@ -16,8 +16,7 @@ export default function Day(props: { weather: Weather }) {
 
   const incomingDate = new Date(weatherByDay[0]?.dt_txt);
   const incomingDay = incomingDate.getDate();
-  const today = new Date().getDate();
-  const dayDifference = incomingDay - today;
+  const dayDifference = incomingDay - dayOfToday;
 
   return (
     <div className={styles.day}>
