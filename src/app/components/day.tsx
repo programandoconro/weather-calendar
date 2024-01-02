@@ -4,18 +4,20 @@ import styles from "../page.module.css";
 import ForecastBlock from "./forecast-card";
 import { dayOfWeek } from "../utils/date-operations";
 
-export default function Day(props: { dayIndex: number; weather: Weather }) {
-  const { dayIndex, weather } = props;
-  const weatherByDay: Forecast[] = populateDayForecasts(dayIndex, weather);
+export default function Day(props: { weather: Weather; dayIndex: number }) {
+  const { weather, dayIndex } = props;
+  const weatherByDay: Forecast[] = populateDayForecasts(weather);
 
-  const blocks = weatherByDay.map((forecast, index) => (
-    <ForecastBlock forecast={forecast} key={index} />
-  ));
+  const blocks = weatherByDay
+    .reverse()
+    .map((forecast, index) => (
+      <ForecastBlock forecast={forecast} key={index} />
+    ));
 
   return (
     <>
       {weatherByDay.length > 0 && (
-        <div className={styles.day} key={dayIndex}>
+        <div className={styles.day}>
           <h2>{dayOfWeek(dayIndex)}</h2>
           {blocks}
         </div>
