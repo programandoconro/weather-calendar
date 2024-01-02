@@ -9,7 +9,7 @@ export default function populateDayForecasts(
   const init: Forecast[] = [];
   const dayForecasts = weather.reduce((acc, current) => {
     const dataDay = calculateFromUTCDate(current.dt_txt);
-    if (dataDay.dayFromToday === dayIndex) {
+    if (dataDay.daysFromToday === dayIndex) {
       acc.push({
         dt_txt: dataDay.localDate,
         temp: current.main.temp,

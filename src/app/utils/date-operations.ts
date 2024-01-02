@@ -1,21 +1,25 @@
-export default function calculateFromUTCDate(date: string) {
+export default function calculateFromUTCDate(date: string): {
+  daysFromToday: number;
+  localDate: Date;
+} {
   const utcDate = new Date(date + "Z");
   const utcNow = new Date();
 
   const japanTimeFromIncomingUtcDate = utcToJapanTime(utcDate);
   const timeNow = utcToJapanTime(utcNow);
-  const timeDiff =
-    (Number(japanTimeFromIncomingUtcDate) - Number(timeNow)) /
-    (1000 * 60 * 60 * 24);
-  const dayFromToday = Math.round(timeDiff);
+
+  const timeDiff = Number(japanTimeFromIncomingUtcDate) - Number(timeNow);
+  const oneDayConversion = 1000 * 60 * 60 * 24;
+  const daysDifference = timeDiff / oneDayConversion;
+  const daysFromToday = Math.round(daysDifference);
 
   return {
-    dayFromToday,
+    daysFromToday,
     localDate: japanTimeFromIncomingUtcDate,
   };
 }
 
-export function utcToJapanTime(utcDate: Date) {
+export function utcToJapanTime(utcDate: Date): Date {
   const jstFormatter = new Intl.DateTimeFormat("ja-JP", {
     timeZone: "Asia/Tokyo",
     year: "numeric",
@@ -37,12 +41,12 @@ export function dayOfWeek(dayFromToday: number) {
   const utcDate = new Date().toUTCString();
   const day = utcToJapanTime(new Date(utcDate));
 
-  switch (dayFromToday.toFixed(0)) {
-    case "0": {
+  switch (dayFromToday) {
+    case 0: {
       const today = day.getDay();
       return `今日（${WEEK_DAYS[today]}）`;
     }
-    case "1": {
+    case 1: {
       day.setDate(day.getDate() + 1);
       const tomorrow = day.getDay();
       return `明日（${WEEK_DAYS[tomorrow]}）`;
