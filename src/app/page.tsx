@@ -1,10 +1,10 @@
 import WeatherCalendar from "./components/weather-calendar";
 import { fetchWeather } from "./utils/fetch-weather";
-import transformData from "./utils/transform-data";
+import groupByday from "./utils/group-by-day";
 
 export default async function Home() {
   const weather = await fetchWeather();
-  const transformedData = transformData(weather);
+  const transformedData = groupByday(weather);
 
   return <WeatherCalendar initialData={transformedData} />;
 }

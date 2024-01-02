@@ -1,4 +1,4 @@
-import { utcToJapanTime } from "../utils/date-operations";
+import { utcToJapanTime } from "../utils/utc-to-japan-Time";
 
 describe("date operations", () => {
   describe("utcToJapanTime", () => {

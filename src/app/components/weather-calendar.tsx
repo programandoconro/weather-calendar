@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Weather } from "../model";
 import Day from "./day";
 import styles from "../page.module.css";
-import transformData from "../utils/transform-data";
+import groupByday from "../utils/group-by-day";
 
 export default function WeatherCalendar(props: { initialData: Weather[] }) {
   const [weather, setWeather] = useState<Weather[]>(props.initialData);
@@ -15,20 +15,19 @@ export default function WeatherCalendar(props: { initialData: Weather[] }) {
       });
       const json = await response.json();
       const data: Weather = json.data;
-      const transformedData = transformData(data);
+      const transformedData = groupByday(data);
 
       setWeather(transformedData);
     }
-    fetchForecast();
     const fetchInterval = setInterval(() => fetchForecast(), 1000 * 60);
 
     return () => clearInterval(fetchInterval);
   }, []);
 
-  const days = [0, 1, 2, 3, 4, 5].map((dayIndex) => {
-    return (
-      <Day key={dayIndex} weather={weather[dayIndex]} dayIndex={dayIndex} />
-    );
+  const daysToForecast = [0, 1, 2, 3, 4, 5];
+
+  const days = daysToForecast.map((dayIndex) => {
+    return <Day key={dayIndex} weather={weather[dayIndex]} />;
   });
 
   return (

@@ -1,18 +1,4 @@
-export function utcToJapanTime(utcDate: Date): Date {
-  const jstFormatter = new Intl.DateTimeFormat("ja-JP", {
-    timeZone: "Asia/Tokyo",
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-  });
-  const jstTimeString = jstFormatter.format(utcDate);
-  const japanTime = new Date(jstTimeString);
-
-  return japanTime;
-}
+import { utcToJapanTime } from "./utc-to-japan-Time";
 
 const WEEK_DAYS = ["日", "月", "火", "水", "木", "金", "土"];
 

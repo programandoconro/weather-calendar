@@ -1,7 +1,8 @@
 import { Forecast, Weather } from "../model";
 
-export default function populateDayForecasts(weather: Weather): Forecast[] {
+export default function reduceDayForecasts(weather: Weather): Forecast[] {
   if (!Array.isArray(weather)) return [];
+
   const init: Forecast[] = [];
   const dayForecasts = weather.reduce((acc, current) => {
     const dtTxt = new Date(current.dt_txt);
