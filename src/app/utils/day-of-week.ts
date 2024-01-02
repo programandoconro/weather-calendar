@@ -2,7 +2,7 @@ import { utcToJapanTime } from "./utc-to-japan-Time";
 
 const WEEK_DAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
-export function dayOfWeek(dayFromToday: number) {
+export function dayOfWeekInJapanese(dayFromToday: number) {
   const utcDate = new Date().toUTCString();
   const day = utcToJapanTime(new Date(utcDate));
 

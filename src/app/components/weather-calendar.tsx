@@ -6,30 +6,40 @@ import styles from "../page.module.css";
 import groupByday from "../utils/group-by-day";
 
 export default function WeatherCalendar(props: {
-  initialWeather: Weather[];
-  day: number;
+  weatherFetchedByServer: Weather[];
+  dayOfWeekFetchedByServer: number;
 }) {
-  const [weather, setWeather] = useState<Weather[]>(props.initialWeather);
-  const [dayOfWeek, setDayOfWeek] = useState<number>(props.day);
+  const { weatherFetchedByServer, dayOfWeekFetchedByServer } = props;
+  const [weather, setWeather] = useState<Weather[]>(weatherFetchedByServer);
+  const [dayOfWeek, setDayOfWeek] = useState<number>(dayOfWeekFetchedByServer);
 
   useEffect(() => {
-    async function fetchForecast() {
-      const timeResponse = await fetch("api/time", {
-        cache: "no-store",
-      });
-      const timeJson = await timeResponse.json();
-      const response = await fetch("api/forecast", {
-        cache: "no-store",
-      });
-      const json = await response.json();
-      const dayNumber = timeJson?.data?.day_of_week;
-      setDayOfWeek(Number(dayNumber));
-      const data: Weather = json.data;
-      const transformedData = groupByday(data);
+    async function fetchByClient() {
+      const [weatherData, timeData] = await Promise.all([
+        fetch("api/forecast", {
+          cache: "no-store",
+        })
+          .then((response) => response.json())
+          .catch((e) => {
+            console.log(e);
+          }),
+        fetch("api/time", {
+          cache: "no-store",
+        })
+          .then((response) => response.json())
+          .catch((e) => {
+            console.log(e);
+          }),
+      ]);
+      const dayOfWeekFetchedByClient = timeData?.data?.day_of_week;
+      setDayOfWeek(Number(dayOfWeekFetchedByClient));
+
+      const weatherFetchedByClient: Weather = weatherData.data;
+      const transformedData = groupByday(weatherFetchedByClient);
 
       setWeather(transformedData);
     }
-    const fetchInterval = setInterval(() => fetchForecast(), 1000 * 60);
+    const fetchInterval = setInterval(() => fetchByClient(), 1000 * 60);
 
     return () => clearInterval(fetchInterval);
   }, []);
@@ -38,7 +48,11 @@ export default function WeatherCalendar(props: {
 
   const days = daysToForecast.map((dayIndex) => {
     return (
-      <Day key={dayIndex} weather={weather[dayIndex]} dayOfToday={dayOfWeek} />
+      <Day
+        key={dayIndex}
+        weather={weather[dayIndex]}
+        dayOfWeekToday={dayOfWeek}
+      />
     );
   });
 
