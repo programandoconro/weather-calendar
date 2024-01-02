@@ -3,7 +3,7 @@ export default function calculateFromUTCDate(date: string): {
   localDate: Date;
 } {
   const utcDate = new Date(date + "Z");
-  const utcNow = new Date();
+  const utcNow = new Date(new Date().toUTCString());
 
   const japanTimeFromIncomingUtcDate = utcToJapanTime(utcDate);
   const timeNow = utcToJapanTime(utcNow);
@@ -11,7 +11,7 @@ export default function calculateFromUTCDate(date: string): {
   const timeDiff = Number(japanTimeFromIncomingUtcDate) - Number(timeNow);
   const oneDayConversion = 1000 * 60 * 60 * 24;
   const daysDifference = timeDiff / oneDayConversion;
-  const daysFromToday = Math.round(daysDifference);
+  const daysFromToday = Math.round(Number(daysDifference.toFixed(1)));
 
   return {
     daysFromToday,
