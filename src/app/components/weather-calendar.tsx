@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Weather } from "../model";
+import { Weather, Milliseconds } from "../model";
 import Day from "./day";
 import styles from "../page.module.css";
 import groupByday from "../utils/group-by-day";
+import useSWR from "swr";
 
 export default function WeatherCalendar(props: {
   weatherFetchedByServer: Weather[];
@@ -13,40 +14,46 @@ export default function WeatherCalendar(props: {
   const [weather, setWeather] = useState<Weather[]>(weatherFetchedByServer);
   const [dayOfWeek, setDayOfWeek] = useState<number>(dayOfWeekFetchedByServer);
 
+  async function fetcher<T>(url: string): Promise<{ data: T }> {
+    const response = await fetch(url);
+    return response.json();
+  }
+
+  const refreshInterval: Milliseconds = 1000 * 60;
+
+  const {
+    data: weatherData,
+    error: weatherError,
+    isLoading: weatherLoading,
+  } = useSWR("/api/forecast", fetcher<Weather>, {
+    refreshInterval,
+  });
+
+  const {
+    data: dayOfWeekData,
+    error: dayOfWeekError,
+    isLoading: dayOfWeekLoading,
+  } = useSWR("/api/time", fetcher<{ day_of_week: number }>, {
+    refreshInterval,
+  });
+
   useEffect(() => {
-    const { signal } = new AbortController();
-
-    async function fetchByClient() {
-      const [weatherData, timeData] = await Promise.all([
-        fetch("api/forecast", {
-          cache: "no-cache",
-          signal,
-        })
-          .then((response) => response.json())
-          .catch((e) => {
-            console.log(e);
-          }),
-        fetch("api/time", {
-          cache: "no-cache",
-          signal,
-        })
-          .then((response) => response.json())
-          .catch((e) => {
-            console.log(e);
-          }),
-      ]);
-      const dayOfWeekFetchedByClient = timeData?.data?.day_of_week;
-      setDayOfWeek(Number(dayOfWeekFetchedByClient));
-
-      const weatherFetchedByClient: Weather = weatherData.data;
+    if (!weatherLoading && !weatherError) {
+      const weatherFetchedByClient: Weather | undefined = weatherData?.data;
+      if (!weatherFetchedByClient) return;
       const transformedData = groupByday(weatherFetchedByClient);
-
       setWeather(transformedData);
     }
-    const fetchInterval = setInterval(() => fetchByClient(), 1000 * 60);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weatherData]);
 
-    return () => clearInterval(fetchInterval);
-  }, []);
+  useEffect(() => {
+    if (!dayOfWeekLoading && !dayOfWeekError) {
+      const dayOfWeekFetchedByClient = dayOfWeekData?.data?.day_of_week;
+      setDayOfWeek(Number(dayOfWeekFetchedByClient));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dayOfWeekData]);
 
   const daysToForecast = [0, 1, 2, 3, 4, 5];
 
@@ -70,5 +77,3 @@ export default function WeatherCalendar(props: {
     </div>
   );
 }
-
-export const dynamic = "force-dynamic";

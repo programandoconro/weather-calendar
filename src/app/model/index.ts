@@ -19,3 +19,5 @@ export type Forecast = {
   description: string;
   main: string;
 };
+
+export type Milliseconds = number;
