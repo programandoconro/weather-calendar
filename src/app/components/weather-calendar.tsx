@@ -14,17 +14,21 @@ export default function WeatherCalendar(props: {
   const [dayOfWeek, setDayOfWeek] = useState<number>(dayOfWeekFetchedByServer);
 
   useEffect(() => {
+    const { signal } = new AbortController();
+
     async function fetchByClient() {
       const [weatherData, timeData] = await Promise.all([
         fetch("api/forecast", {
-          cache: "no-store",
+          cache: "no-cache",
+          signal,
         })
           .then((response) => response.json())
           .catch((e) => {
             console.log(e);
           }),
         fetch("api/time", {
-          cache: "no-store",
+          cache: "no-cache",
+          signal,
         })
           .then((response) => response.json())
           .catch((e) => {
@@ -66,3 +70,5 @@ export default function WeatherCalendar(props: {
     </div>
   );
 }
+
+export const dynamic = "force-dynamic";
