@@ -16,6 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <meta httpEquiv="refresh" content="60" />
+
       <body className={inter.className}>{children}</body>
     </html>
   );
