@@ -66,3 +66,11 @@
     width: 80px;
   }
 }
+
+@media (max-width: 300px) {
+  .forecast {
+    background-color: rebeccapurple;
+    display: grid;
+    justify-content: center;
+  }
+}
