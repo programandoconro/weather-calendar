@@ -9,6 +9,8 @@
   min-width: 100%;
   margin: 5px 0;
   background-color: rgb(1, 118, 157);
+  justify-content: center;
+  text-align: center;
 }
 
 .day:first-child {
