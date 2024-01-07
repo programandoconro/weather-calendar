@@ -5,13 +5,13 @@ import groupByday from "./utils/group-by-day";
 
 export default async function Home() {
   const [weather, day] = await Promise.all([fetchWeather(), fetchTime()]);
-  const dayNumber = day?.day_of_week;
   const transformedData = groupByday(weather);
+  const dayOfYear = day?.day_of_year;
 
   return (
     <WeatherCalendar
-      weatherFetchedByServer={transformedData}
-      dayOfWeekFetchedByServer={dayNumber}
+      weatherForecast={transformedData}
+      currentDayOfYear={dayOfYear}
     />
   );
 }

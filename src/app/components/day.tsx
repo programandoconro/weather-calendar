@@ -6,9 +6,9 @@ import { dayOfWeekInJapanese } from "../utils/day-of-week";
 
 export default function Day(props: {
   weather: Weather;
-  dayOfWeekToday: number;
+  currentDayOfYear: number;
 }) {
-  const { weather, dayOfWeekToday } = props;
+  const { weather, currentDayOfYear } = props;
   if (!weather) return;
 
   const weatherByDay: Forecast[] = reduceDayForecasts(weather);
@@ -18,8 +18,11 @@ export default function Day(props: {
   ));
 
   const incomingDate = new Date(weatherByDay[0]?.dt_txt);
-  const incomingDay = incomingDate.getDate();
-  const dayDifference = incomingDay - dayOfWeekToday;
+  const startOfYearDate = new Date(incomingDate.getFullYear(), 0, 0);
+  const dateDifference = Number(incomingDate) - Number(startOfYearDate);
+  const oneDay = 1000 * 60 * 60 * 24;
+  const incomingDayOfYear = Math.floor(dateDifference / oneDay);
+  const dayDifference = incomingDayOfYear - currentDayOfYear;
 
   return (
     <div className={styles.day}>

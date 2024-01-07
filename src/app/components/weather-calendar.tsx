@@ -3,19 +3,18 @@ import Day from "./day";
 import styles from "../page.module.css";
 
 export default function WeatherCalendar(props: {
-  weatherFetchedByServer: Weather[];
-  dayOfWeekFetchedByServer: number;
+  weatherForecast: Weather[];
+  currentDayOfYear: number;
 }) {
-  const { weatherFetchedByServer, dayOfWeekFetchedByServer } = props;
+  const { weatherForecast, currentDayOfYear } = props;
+  const indexOfDaysToForecast = [0, 1, 2, 3, 4, 5];
 
-  const daysToForecast = [0, 1, 2, 3, 4, 5];
-
-  const days = daysToForecast.map((dayIndex) => {
+  const days = indexOfDaysToForecast.map((dayIndex) => {
     return (
       <Day
         key={dayIndex}
-        weather={weatherFetchedByServer[dayIndex]}
-        dayOfWeekToday={dayOfWeekFetchedByServer}
+        weather={weatherForecast[dayIndex]}
+        currentDayOfYear={currentDayOfYear}
       />
     );
   });
