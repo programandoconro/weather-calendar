@@ -15,7 +15,7 @@ export function weatherBackgroundColor(
       return "#222";
     }
     case "Snow": {
-      return "lightgray";
+      return "gray";
     }
     default: {
       return "darkred";
