@@ -1,8 +1,8 @@
-import { Weather } from "../model";
-import Day from "./day";
-import styles from "../page.module.css";
+import { Weather } from "../../model";
+import Day from "../day";
+import styles from "./calendar.module.css";
 
-export default function WeatherCalendar(props: {
+export default function Calendar(props: {
   weatherForecast: Weather[];
   currentDayOfYear: number;
 }) {
@@ -20,12 +20,8 @@ export default function WeatherCalendar(props: {
   });
 
   return (
-    <div>
-      <title>Weather Calendar</title>
-
-      <main className={styles.calendar}>
-        <div className={styles.card}>{days}</div>
-      </main>
+    <div className={styles.calendar}>
+      <div className={styles.card}>{days}</div>
     </div>
   );
 }

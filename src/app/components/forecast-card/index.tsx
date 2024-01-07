@@ -1,9 +1,9 @@
-import { Forecast } from "../model";
+import { Forecast } from "../../model";
 import Image from "next/image";
-import styles from "../page.module.css";
-import { weatherBackgroundColor } from "../utils/weather-background-color";
+import styles from "./forecast.module.css";
+import { weatherBackgroundColor } from "../../utils/weather-background-color";
 
-export default function ForecastBlock(props: { forecast: Forecast }) {
+export default function ForecastCard(props: { forecast: Forecast }) {
   const { forecast } = props;
   const { dt_txt, description, temp, icon, wind } = forecast;
   const time = dt_txt.toLocaleString().split(",")[1];
