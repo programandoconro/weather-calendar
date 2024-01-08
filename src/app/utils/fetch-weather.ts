@@ -1,4 +1,6 @@
-export async function fetchWeather() {
+import { Weather } from "../model";
+
+export async function fetchWeather(): Promise<Weather | undefined> {
   const lat = process.env.LAT;
   const lon = process.env.LON;
   const apiKey = process.env.API_KEY;

@@ -1,6 +1,8 @@
-export async function fetchTime() {
+import { Time } from "../model";
+
+export async function fetchTime(timeZone: string): Promise<Time | undefined> {
   // https://worldtimeapi.org/
-  const url = "http://worldtimeapi.org/api/timezone/Asia/Tokyo";
+  const url = `http://worldtimeapi.org/api/timezone/${timeZone}`;
 
   try {
     const response = await fetch(url, {
@@ -10,8 +12,10 @@ export async function fetchTime() {
       throw new Error("failed to fetch");
     }
     const data = await response.json();
-    return data || {};
+    return data;
   } catch (e) {
     console.error(e);
   }
 }
+
+export const TIMEZONE = "Asia/Tokyo";
