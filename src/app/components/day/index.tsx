@@ -3,12 +3,10 @@ import reduceDayForecasts from "../../utils/reduce-day-forecasts";
 import styles from "./day.module.css";
 import ForecastCard from "../forecast-card";
 import { dayOfWeekInJapanese } from "../../utils/day-of-week";
+import { daysDifference } from "@/app/utils/days-difference";
 
-export default function Day(props: {
-  weather: Weather;
-  currentDayOfYear: number;
-}) {
-  const { weather, currentDayOfYear } = props;
+export default function Day(props: { weather: Weather; currentDate: Date }) {
+  const { weather, currentDate } = props;
   if (!weather) return;
 
   const weatherByDay: Forecast[] = reduceDayForecasts(weather);
@@ -18,11 +16,7 @@ export default function Day(props: {
   ));
 
   const incomingDate = new Date(weatherByDay[0]?.dt_txt);
-  const startOfYearDate = new Date(incomingDate.getFullYear(), 0, 0);
-  const dateDifference = Number(incomingDate) - Number(startOfYearDate);
-  const oneDay = 1000 * 60 * 60 * 24;
-  const incomingDayOfYear = Math.floor(dateDifference / oneDay);
-  const dayDifference = incomingDayOfYear - currentDayOfYear;
+  const dayDifference = daysDifference(incomingDate, currentDate);
 
   return (
     <div className={styles.day}>

@@ -1,12 +1,14 @@
-import { Weather } from "../../model";
+import { Time, Weather } from "../../model";
 import Day from "../day";
 import styles from "./calendar.module.css";
 
 export default function Calendar(props: {
   weatherForecast: Weather[];
-  currentDayOfYear: number;
+  time: Time;
 }) {
-  const { weatherForecast, currentDayOfYear } = props;
+  const { weatherForecast, time } = props;
+  const currentDate = new Date(time.datetime);
+
   const indexOfDaysToForecast = [0, 1, 2, 3, 4, 5];
 
   const days = indexOfDaysToForecast.map((dayIndex) => {
@@ -14,7 +16,7 @@ export default function Calendar(props: {
       <Day
         key={dayIndex}
         weather={weatherForecast[dayIndex]}
-        currentDayOfYear={currentDayOfYear}
+        currentDate={currentDate}
       />
     );
   });
