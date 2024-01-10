@@ -5,8 +5,8 @@ import ForecastCard from "../forecast-card";
 import { dayOfWeekInJapanese } from "../../utils/day-of-week";
 import { daysDifference } from "@/app/utils/days-difference";
 
-export default function Day(props: { weather: Weather; currentDate: Date }) {
-  const { weather, currentDate } = props;
+export default function Day(props: { weather: Weather }) {
+  const { weather } = props;
   if (!weather) return;
 
   const weatherByDay: Forecast[] = reduceDayForecasts(weather);
@@ -17,8 +17,10 @@ export default function Day(props: { weather: Weather; currentDate: Date }) {
 
   const incomingDate = new Date(weatherByDay[0]?.dt_txt);
   incomingDate.setHours(incomingDate.getHours() + 9);
+  const dateNow = new Date();
+  dateNow.setHours(dateNow.getHours() + 9);
 
-  const dayDifference = daysDifference(incomingDate, currentDate);
+  const dayDifference = daysDifference(incomingDate, dateNow);
 
   return (
     <div className={styles.day}>

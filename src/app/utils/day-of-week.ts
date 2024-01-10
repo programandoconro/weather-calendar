@@ -2,6 +2,7 @@ const WEEK_DAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
 export function dayOfWeekInJapanese(dayFromToday: number) {
   const today = new Date();
+  today.setHours(today.getHours() + 9);
 
   switch (dayFromToday) {
     case 0: {
