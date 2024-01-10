@@ -37,4 +37,13 @@ describe("daysDifference", () => {
 
     expect(difference).toBe(7);
   });
+  it("should get 0 when same day and difference is less than 9 hours", () => {
+    const today = "2024-01-10T08:00:00.000Z";
+    const alsoToday = "2024-01-10T09:00:00.000Z";
+    const dateToday = new Date(today);
+    const dateAlsoToday = new Date(alsoToday);
+    const difference = daysDifference(dateAlsoToday, dateToday);
+
+    expect(difference).toBe(0);
+  });
 });
