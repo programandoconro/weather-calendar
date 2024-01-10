@@ -16,6 +16,8 @@ export default function Day(props: { weather: Weather; currentDate: Date }) {
   ));
 
   const incomingDate = new Date(weatherByDay[0]?.dt_txt);
+  incomingDate.setHours(incomingDate.getHours() + 9);
+
   const dayDifference = daysDifference(incomingDate, currentDate);
 
   return (
