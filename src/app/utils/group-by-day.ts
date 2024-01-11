@@ -1,9 +1,9 @@
 import { Weather } from "../model";
+import { utcToJapanTime } from "./utc-to-japan-time";
 
 export default function groupByday(data: Weather): Weather[] {
   const grouped = groupBy(data, (v) => {
-    const date = new Date(v.dt_txt);
-    date.setHours(date.getHours() + 9); // Japan's timezone
+    const date = utcToJapanTime(new Date(v.dt_txt));
     return date.getDate().toString();
   });
 

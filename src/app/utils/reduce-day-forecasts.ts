@@ -1,12 +1,12 @@
 import { Forecast, Weather } from "../model";
+import { utcToJapanTime } from "./utc-to-japan-time";
 
 export default function reduceDayForecasts(weather: Weather): Forecast[] {
   if (!Array.isArray(weather)) return [];
 
   const init: Forecast[] = [];
   const dayForecasts = weather.reduce((acc, current) => {
-    const dtTxt = new Date(current.dt_txt);
-    dtTxt.setHours(dtTxt.getHours() + 9);
+    const dtTxt = utcToJapanTime(new Date(current.dt_txt));
 
     acc.push({
       dt_txt: dtTxt,
