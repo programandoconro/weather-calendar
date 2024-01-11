@@ -14,11 +14,11 @@ export default function Day(props: { weather: Weather }) {
     <ForecastCard forecast={forecast} key={index} />
   ));
 
-  const incomingDate = new Date(weatherByDay[0]?.dt_txt);
+  const firstIncomingDate = new Date(weatherByDay[0]?.dt_txt);
 
   return (
     <div className={styles.day}>
-      <h2>{dayOfWeekInJapanese(incomingDate)}</h2>
+      <h2>{dayOfWeekInJapanese(firstIncomingDate)}</h2>
       {blocks}
     </div>
   );
