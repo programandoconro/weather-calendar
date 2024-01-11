@@ -3,8 +3,6 @@ import reduceDayForecasts from "../../utils/reduce-day-forecasts";
 import styles from "./day.module.css";
 import ForecastCard from "../forecast-card";
 import { dayOfWeekInJapanese } from "../../utils/day-of-week";
-import { daysDifference } from "@/app/utils/days-difference";
-import { utcToJapanTime } from "@/app/utils/utc-to-japan-time";
 
 export default function Day(props: { weather: Weather }) {
   const { weather } = props;
@@ -16,14 +14,11 @@ export default function Day(props: { weather: Weather }) {
     <ForecastCard forecast={forecast} key={index} />
   ));
 
-  const incomingDate = utcToJapanTime(new Date(weatherByDay[0]?.dt_txt));
-  const dateNow = utcToJapanTime(new Date());
-
-  const dayDifference = daysDifference(incomingDate, dateNow);
+  const incomingDate = new Date(weatherByDay[0]?.dt_txt);
 
   return (
     <div className={styles.day}>
-      <h2>{dayOfWeekInJapanese(dayDifference)}</h2>
+      <h2>{dayOfWeekInJapanese(incomingDate)}</h2>
       {blocks}
     </div>
   );
