@@ -1,4 +1,5 @@
 export function utcToJapanTime(date: Date) {
-  date.setHours(date.getHours() + 9); // Japan time has 9 hours more than utc time
-  return date;
+  const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + 9); // Japan time has 9 hours more than utc time
+  return newDate;
 }

@@ -11,10 +11,12 @@ const FUTURE_DAYS_LOOKUP: Record<number, string> = {
 } as const;
 
 export function dayOfWeekInJapanese(date: Date) {
-  const index = +date.getDay().toLocaleString();
+  const japanTime = utcToJapanTime(date);
+  console.log({ japanTime });
+  const index = +japanTime.getDay().toLocaleString();
 
   const futureDays = Object.keys(FUTURE_DAYS_LOOKUP).find((day) =>
-    isFutureDate(date, +day)
+    isFutureDate(japanTime, +day)
   );
 
   if (futureDays === undefined) {
@@ -25,8 +27,12 @@ export function dayOfWeekInJapanese(date: Date) {
 }
 
 function isFutureDate(date: Date, futureDays: number) {
-  const futureDate = new Date();
+  const futureDate = utcToJapanTime(new Date());
   futureDate.setDate(futureDate.getDate() + futureDays);
 
-  return futureDate.toLocaleDateString() === date.toLocaleDateString();
+  const localFutureDate = futureDate.toLocaleDateString();
+  const localIncomingDate = date.toLocaleDateString();
+  console.log({ localFutureDate, localIncomingDate });
+
+  return localFutureDate === localIncomingDate;
 }
