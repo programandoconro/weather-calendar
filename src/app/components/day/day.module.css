@@ -11,6 +11,7 @@
   background-color: rgb(1, 118, 157);
   justify-content: center;
   text-align: center;
+  padding-bottom: 2rem;
 }
 
 .day:first-child {
