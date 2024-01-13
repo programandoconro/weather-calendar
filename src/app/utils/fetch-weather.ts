@@ -1,10 +1,14 @@
 import { Weather } from "../model";
 import groupByday from "./group-by-day";
 
-async function noCacheFetch<T>(url: string): Promise<T> {
+async function noCacheFetch<T>(
+  url: string,
+  method: "PUT" | "GET" | "POST"
+): Promise<T> {
   try {
     const response = await fetch(url, {
       cache: "no-store",
+      method,
     });
     if (!response.ok) {
       throw new Error("failed to fetch");
@@ -23,14 +27,15 @@ export async function fetchWeather(): Promise<Weather | undefined> {
   const query = `lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
   const url = `http://api.openweathermap.org/data/2.5/forecast?${query}`;
 
-  const data = await noCacheFetch<{ list: Weather }>(url);
+  const data = await noCacheFetch<{ list: Weather }>(url, "GET");
   return data?.list || [];
 }
 
 export async function fetchWeatherClientSide(
   url: string
 ): Promise<Weather[] | null> {
-  const data = await noCacheFetch<Weather>(url);
+  // need to use "PUT" in order to revalidate data in client side nextjs https://www.youtube.com/watch?v=fY4IHhXjn4w
+  const data = await noCacheFetch<Weather>(url, "PUT");
   const transfomedData = groupByday(data);
 
   return transfomedData;

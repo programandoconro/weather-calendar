@@ -14,6 +14,9 @@ export default function Calendar(props: { initialForecast: Weather[] }) {
   const { data: forecast } = useSWR("/api/forecast", fetchWeatherClientSide, {
     refreshInterval: ONE_MINUTE,
     fallbackData: initialForecast,
+    revalidateOnMount: true,
+    refreshWhenHidden: true,
+    revalidateOnFocus: true,
   });
 
   if (!forecast) return null;
