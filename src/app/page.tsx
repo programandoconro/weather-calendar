@@ -1,18 +1,16 @@
 import Calendar from "./components/calendar";
-import { fetchWeather } from "./utils/fetch-weather";
-import groupByday from "./utils/group-by-day";
+import { fetchWeather } from "./actions/fetch-weather";
+import { OPEN_WEATHER_URL } from "./constants/urls";
 
 export default async function Home() {
-  const [weather] = await Promise.all([fetchWeather()]);
+  const [weather] = await Promise.all([fetchWeather(OPEN_WEATHER_URL)]);
   if (!weather) return <div>An error ocurred fetching the data</div>;
-
-  const transformedData = groupByday(weather);
 
   return (
     <div>
       <title>Weather Calendar</title>
       <main>
-        <Calendar initialForecast={transformedData} />
+        <Calendar initialForecast={weather} />
       </main>
     </div>
   );
