@@ -4,26 +4,25 @@ import { Weather } from "../../model";
 import Day from "../day";
 import styles from "./calendar.module.css";
 import useSWR, { SWRConfiguration } from "swr";
-import { fetchWeatherClientSide } from "@/app/utils/fetch-weather";
 import { logError } from "@/app/actions/log-error";
+import { fetchWeather } from "@/app/actions/fetch-weather";
 
 const ONE_MINUTE = 1000 * 60;
-const ROUTE = "/api/forecast";
 
 export default function Calendar(props: { initialForecast: Weather[] }) {
   const { initialForecast } = props;
 
   const swrConfiguration: SWRConfiguration = {
-    fallbackData: initialForecast,
     refreshInterval: ONE_MINUTE,
     revalidateOnMount: true,
     revalidateOnFocus: true,
     keepPreviousData: true,
+    fallbackData: initialForecast,
   };
 
   const { data: forecast, error } = useSWR(
-    ROUTE,
-    fetchWeatherClientSide,
+    "url in server action",
+    fetchWeather,
     swrConfiguration
   );
 
