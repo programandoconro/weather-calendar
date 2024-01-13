@@ -6,7 +6,6 @@ import styles from "./calendar.module.css";
 import useSWR, { SWRConfiguration } from "swr";
 import { logError } from "@/app/actions/log-error";
 import { fetchWeather } from "@/app/actions/fetch-weather";
-import { OPEN_WEATHER_URL } from "@/app/constants/urls";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -22,7 +21,7 @@ export default function Calendar(props: { initialForecast: Weather[] }) {
   };
 
   const { data: forecast, error } = useSWR(
-    OPEN_WEATHER_URL,
+    "url in server action",
     fetchWeather,
     swrConfiguration
   );

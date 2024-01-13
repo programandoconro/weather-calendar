@@ -21,9 +21,7 @@ async function noCacheFetch<T>(
   }
 }
 
-export async function fetchWeather(
-  url: string
-): Promise<Weather[] | undefined> {
+export async function fetchWeather(): Promise<Weather[] | undefined> {
   unstable_noStore();
   const lat = process.env.LAT;
   const lon = process.env.LON;
