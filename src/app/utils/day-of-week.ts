@@ -11,16 +11,15 @@ const FUTURE_DAYS_LOOKUP: Record<number, string> = {
 } as const;
 
 export function dayOfWeekInJapanese(date: Date) {
-  const japanDate = utcToJapanTime(date);
-  const index = +japanDate.getDay().toLocaleString();
-
   const futureDays = Object.keys(FUTURE_DAYS_LOOKUP).find((day) =>
-    isFutureDate(japanDate, +day)
+    isFutureDate(date, +day)
   );
 
   if (futureDays === undefined) {
     return "";
   }
+
+  const index = utcToJapanTime(date).getDay();
 
   const dayOfWeek = `（${WEEK_DAYS[index]}）`;
   const logicalDay = `${FUTURE_DAYS_LOOKUP[+futureDays]}`;
