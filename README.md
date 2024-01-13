@@ -1,7 +1,9 @@
 # Weather calendar
 
-#### App deployment: https://weather-calendar-plum.vercel.app/
+#### App: https://weather-calendar-plum.vercel.app/
 
-Gets 5 days of weather forecast for my local weather in Tokyo/Japan. It refreshes every minute for weather updates.
+A Nextjs 14 app with vercel deployment, and weather forecasts from openweathermap.org API.
 
-Uses Nextjs with vercel.com, and weather forecasts from openweathermap.org API.
+It gets 5 days weather forecast for local weather in Tokyo/Japan.
+
+With SSR for fast page load and SWR to revalidate data with server actions.
