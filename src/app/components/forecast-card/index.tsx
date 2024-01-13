@@ -17,7 +17,6 @@ export default function ForecastCard(props: { forecast: Forecast }) {
         backgroundColor: `${weatherBackgroundColor(forecast.main)}`,
       }}
     >
-      <h5>{`${dt_txt.getMonth() + 1}/${dt_txt.getDate()}`}</h5>
       <h5 className={styles.time}>{formattedTime}</h5>
 
       <div className={styles.description}>

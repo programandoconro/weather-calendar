@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   margin: auto;
-  padding: 10px;
+  padding: 0 0 2rem 0;
   cursor: default;
   justify-content: flex-start;
   opacity: 0.95;
@@ -11,7 +11,6 @@
   background-color: rgb(1, 118, 157);
   justify-content: center;
   text-align: center;
-  padding-bottom: 2rem;
 }
 
 .day:first-child {
@@ -25,10 +24,16 @@
   margin: 0;
 }
 
-.day h2 {
-  color: whitesmoke;
+.day center {
   width: 100%;
-  padding: 10px 0;
+}
+
+.day h2,
+.day small {
+  color: whitesmoke;
+}
+.day small {
+  opacity: 0.8;
 }
 
 @media (max-width: 600px) {

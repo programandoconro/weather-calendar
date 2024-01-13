@@ -22,7 +22,10 @@ export function dayOfWeekInJapanese(date: Date) {
     return "";
   }
 
-  return `${FUTURE_DAYS_LOOKUP[+futureDays]}（${WEEK_DAYS[index]}）`;
+  const dayOfWeek = `（${WEEK_DAYS[index]}）`;
+  const logicalDay = `${FUTURE_DAYS_LOOKUP[+futureDays]}`;
+
+  return `${logicalDay}${dayOfWeek}`;
 }
 
 function isFutureDate(date: Date, futureDays: number) {

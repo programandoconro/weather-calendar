@@ -31,8 +31,9 @@
 }
 
 .forecast .wind {
-  transform: translateY(4px);
+  transform: translateY(6px);
   width: 80px;
+  height: 30px;
 }
 
 .forecast .popup {
@@ -61,9 +62,15 @@
   }
   .forecast .time {
     width: 80px;
+    padding: 0;
   }
   .forecast .temp {
     width: 80px;
+  }
+  .forecast .wind {
+    transform: translateY(4px);
+    width: 80px;
+    height: auto;
   }
 }
 

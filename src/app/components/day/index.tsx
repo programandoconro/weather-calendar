@@ -3,6 +3,7 @@ import reduceDayForecasts from "../../utils/reduce-day-forecasts";
 import styles from "./day.module.css";
 import ForecastCard from "../forecast-card";
 import { dayOfWeekInJapanese } from "../../utils/day-of-week";
+import { japaneseFormatDate } from "@/app/utils/japanese-format-date";
 
 export default function Day(props: { weather: Weather }) {
   const { weather } = props;
@@ -18,7 +19,10 @@ export default function Day(props: { weather: Weather }) {
 
   return (
     <div className={styles.day}>
-      <h2>{dayOfWeekInJapanese(firstIncomingDate)}</h2>
+      <center>
+        <small>{japaneseFormatDate(firstIncomingDate)}</small>
+        <h2>{dayOfWeekInJapanese(firstIncomingDate)}</h2>
+      </center>
       {blocks}
     </div>
   );
