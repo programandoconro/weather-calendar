@@ -28,7 +28,7 @@ export function dayOfWeekInJapanese(date: Date) {
 }
 
 function isFutureDate(date: Date, futureDays: number) {
-  const futureDate = utcToJapanTime(new Date());
+  const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + futureDays);
 
   return futureDate.toDateString() === date.toDateString();
