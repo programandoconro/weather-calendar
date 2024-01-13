@@ -5,9 +5,9 @@ import ForecastCard from "../forecast-card";
 import { dayOfWeekInJapanese } from "../../utils/day-of-week";
 import { japaneseFormatDate } from "@/app/utils/japanese-format-date";
 
-export default function Day(props: { weather: Weather }) {
+export default function Day(props: { weather: Weather | null }) {
   const { weather } = props;
-  if (!weather) return;
+  if (!weather) return null;
 
   const weatherByDay: Forecast[] = reduceDayForecasts(weather);
 

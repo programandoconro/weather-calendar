@@ -12,7 +12,7 @@ export default async function Home() {
     <div>
       <title>Weather Calendar</title>
       <main>
-        <Calendar weatherForecast={transformedData} />
+        <Calendar initialForecast={transformedData} />
       </main>
     </div>
   );

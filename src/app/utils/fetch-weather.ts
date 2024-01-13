@@ -1,4 +1,5 @@
 import { Weather } from "../model";
+import groupByday from "./group-by-day";
 
 export async function fetchWeather(): Promise<Weather | undefined> {
   const lat = process.env.LAT;
@@ -20,4 +21,13 @@ export async function fetchWeather(): Promise<Weather | undefined> {
   } catch (e) {
     console.error(e);
   }
+}
+
+export async function fetchWeatherClientSide(
+  url: string
+): Promise<Weather[] | null> {
+  const response = await fetch(url);
+  const data = await response.json();
+  const transfomedData = groupByday(data);
+  return transfomedData;
 }
