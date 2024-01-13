@@ -28,11 +28,6 @@ export function dayOfWeekInJapanese(date: Date) {
 function isFutureDate(date: Date, futureDays: number) {
   const futureDate = utcToJapanTime(new Date());
   futureDate.setDate(futureDate.getDate() + futureDays);
-  console.log({
-    futureDate,
-    localString: futureDate.toLocaleString(),
-    string: futureDate.toString(),
-  });
 
-  return futureDate.toLocaleDateString() === date.toLocaleDateString();
+  return futureDate.toDateString() === date.toDateString();
 }
