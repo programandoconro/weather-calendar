@@ -19,10 +19,10 @@ export default function Day(props: { weather: Weather | null }) {
 
   return (
     <div className={styles.day}>
-      <center>
+      <div className={styles.title}>
         <small>{japaneseFormatDate(firstIncomingDate)}</small>
         <h2>{dayOfWeekInJapanese(firstIncomingDate)}</h2>
-      </center>
+      </div>
       {blocks}
     </div>
   );

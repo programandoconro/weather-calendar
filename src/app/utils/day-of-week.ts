@@ -19,10 +19,10 @@ export function dayOfWeekInJapanese(date: Date) {
     return "";
   }
 
-  const index = utcToJapanTime(date).getDay();
+  const index = +date.getDay().toLocaleString();
 
   const dayOfWeek = `（${WEEK_DAYS[index]}）`;
-  const logicalDay = `${FUTURE_DAYS_LOOKUP[+futureDays]}`;
+  const logicalDay = `${"\xa0".repeat(2)}${FUTURE_DAYS_LOOKUP[+futureDays]}`;
 
   return `${logicalDay}${dayOfWeek}`;
 }
