@@ -1,5 +1,3 @@
-import { utcToJapanTime } from "./utc-to-japan-time";
-
 const WEEK_DAYS = ["日", "月", "火", "水", "木", "金", "土"] as const;
 const FUTURE_DAYS_LOOKUP: Record<number, string> = {
   0: "今日",

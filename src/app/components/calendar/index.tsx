@@ -3,28 +3,39 @@
 import { Weather } from "../../model";
 import Day from "../day";
 import styles from "./calendar.module.css";
-import useSWR from "swr";
+import useSWR, { SWRConfiguration } from "swr";
 import { fetchWeatherClientSide } from "@/app/utils/fetch-weather";
 
 const ONE_MINUTE = 1000 * 60;
+const ROUTE = "/api/forecast";
 
 export default function Calendar(props: { initialForecast: Weather[] }) {
   const { initialForecast } = props;
 
-  const { data: forecast } = useSWR("/api/forecast", fetchWeatherClientSide, {
+  const swrConfiguration: SWRConfiguration = {
     refreshInterval: ONE_MINUTE,
     fallbackData: initialForecast,
     revalidateOnMount: true,
     refreshWhenHidden: true,
     revalidateOnFocus: true,
-  });
+  };
 
-  if (!forecast) return null;
+  const { data: forecast, error } = useSWR(
+    ROUTE,
+    fetchWeatherClientSide,
+    swrConfiguration
+  );
 
-  const indexOfDaysToForecast = [0, 1, 2, 3, 4, 5];
+  if (error || !forecast) {
+    return (
+      <div style={{ color: "white" }}>An error ocurred fetching the data</div>
+    );
+  }
+
+  const indexOfDaysToForecast = Object.keys(forecast);
 
   const days = indexOfDaysToForecast.map((dayIndex) => {
-    return <Day key={dayIndex} weather={forecast[dayIndex]} />;
+    return <Day key={dayIndex} weather={forecast[+dayIndex]} />;
   });
 
   return (
