@@ -58,7 +58,7 @@
     justify-content: space-between;
     padding: 10px;
     align-items: center;
-    margin: 0px;
+    margin: 0 10px;
   }
   .forecast .time {
     width: 80px;
