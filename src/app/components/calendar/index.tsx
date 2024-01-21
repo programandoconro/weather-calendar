@@ -61,7 +61,9 @@ export default function Calendar(props: {
   return (
     <div className={styles.calendar}>
       <div className={styles.card}>
+        <h2 className={styles.current}>今の天気：</h2>
         <CurrentWeatherCard currentWeather={currentWeather} />
+        <h1 className={styles.forecast}>天気予報</h1>
         {forecasts}
       </div>
     </div>

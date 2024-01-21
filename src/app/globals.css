@@ -1,5 +1,5 @@
 :root {
-  --dark-purple: rgb(46, 26, 66);
+  --dark-purple: #191728;
 }
 * {
   box-sizing: border-box;
@@ -14,5 +14,5 @@ body {
 }
 
 body {
-  background-color: #191728;
+  background-color: var(--dark-purple);
 }

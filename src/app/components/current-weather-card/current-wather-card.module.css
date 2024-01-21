@@ -6,8 +6,9 @@
   border-radius: 5px;
   padding: 10px 0;
   margin: 10px;
-  max-width: 500px;
   overflow-x: hidden;
+  max-width: 500px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 7px;
 }
 
 .icon {
