@@ -3,16 +3,13 @@
   color: whitesmoke;
   justify-content: space-around;
   align-items: center;
-  position: relative;
   border-radius: 5px;
   padding: 10px 0;
   margin: 10px;
-  overflow: hidden;
 }
 
 .icon {
   transform: translateY(5px);
-  z-index: 2;
 }
 
 .wind {
@@ -27,8 +24,8 @@
 
 .popup {
   text-transform: capitalize;
-  top: 50%;
-  left: 50%;
+  top: 0%;
+  left: 100%;
   border: none;
   padding: 5px;
   border-radius: 5px;
