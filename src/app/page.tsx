@@ -10,8 +10,11 @@ export default async function Home() {
     fetchCurrentWeather(),
   ]);
 
-  if (!weatherForecast || !currentWeather)
-    return <div>An error ocurred while fetching the data</div>;
+  if (!weatherForecast)
+    return <div>An error ocurred while fetching the weather forecast data</div>;
+
+  if (!currentWeather)
+    return <div>An error ocurred while fetching the current weather data</div>;
 
   return (
     <div>
@@ -19,7 +22,7 @@ export default async function Home() {
       <main>
         <Calendar
           initialForecast={weatherForecast}
-          currentWeather={currentWeather}
+          initialCurrentWeather={currentWeather}
         />
       </main>
     </div>

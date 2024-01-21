@@ -5,37 +5,54 @@ import Day from "../day";
 import styles from "./calendar.module.css";
 import useSWR, { SWRConfiguration } from "swr";
 import { logError } from "@/app/actions/log-error";
-import { fetchWeatherForecast } from "@/app/actions/fetch-weather";
+import {
+  fetchCurrentWeather,
+  fetchWeatherForecast,
+} from "@/app/actions/fetch-weather";
 import Current from "../current";
+import { useEffect } from "react";
 
 const ONE_MINUTE = 1000 * 60;
 
 export default function Calendar(props: {
   initialForecast: WeatherForecast[];
-  currentWeather: CurrentWeather;
+  initialCurrentWeather: CurrentWeather;
 }) {
-  const { initialForecast, currentWeather } = props;
+  const { initialForecast, initialCurrentWeather } = props;
 
   const swrConfiguration: SWRConfiguration = {
     refreshInterval: ONE_MINUTE,
     revalidateOnMount: true,
     revalidateOnFocus: true,
     keepPreviousData: true,
-    fallbackData: initialForecast,
   };
 
-  const { data: forecast, error } = useSWR(
-    "url in server action",
+  const { data: forecast, error: forecastError } = useSWR(
+    "url for forecast weather in server action",
     fetchWeatherForecast,
-    swrConfiguration
+    { ...swrConfiguration, fallbackData: initialForecast }
   );
 
-  if (!forecast) {
-    if (error) {
-      logError(error);
+  const { data: currentWeather, error: currentError } = useSWR(
+    "url for current weather in server action",
+    fetchCurrentWeather,
+    { ...swrConfiguration, fallbackData: initialCurrentWeather }
+  );
+  useEffect(() => {
+    console.log(currentWeather);
+  }, [currentWeather]);
+
+  if (!forecast || !currentWeather) {
+    if (forecastError) {
+      logError(forecastError);
+    }
+    if (currentError) {
+      logError(currentError);
     }
     return (
-      <div style={{ color: "white" }}>An error ocurred fetching the data</div>
+      <div style={{ color: "white" }}>
+        An error ocurred fetching the weather data
+      </div>
     );
   }
 
