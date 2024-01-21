@@ -12,10 +12,6 @@
   transform: translateY(5px);
 }
 
-.wind {
-  transform: translateY(5px);
-}
-
 .icon:hover {
   .popup {
     opacity: 1;

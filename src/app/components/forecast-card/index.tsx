@@ -1,7 +1,9 @@
 import { Forecast } from "../../model";
-import Image from "next/image";
 import styles from "./forecast.module.css";
 import { weatherBackgroundColor } from "../../utils/weather-background-color";
+import WeatherIcon from "@/app/ui/weather-icon";
+import Temperature from "@/app/ui/temperature";
+import Wind from "@/app/ui/wind";
 
 export default function ForecastCard(props: { forecast: Forecast }) {
   const { forecast } = props;
@@ -21,19 +23,13 @@ export default function ForecastCard(props: { forecast: Forecast }) {
 
       <div className={styles.description}>
         <div className={styles.popup} role="dialog">
-          {description[0].toUpperCase() + description.slice(1)}
+          {description}
         </div>
-        <Image
-          className="image"
-          width={50}
-          height={50}
-          src={`http://openweathermap.org/img/w/${icon}.png`}
-          alt="weather description image"
-        />
+        <WeatherIcon icon={icon} />
       </div>
 
-      <h3 className={styles.temp}>{temp} °C</h3>
-      <h5 className={styles.wind}>༄ {Math.floor(wind * 3.6)} Km/h</h5>
+      <Temperature temperature={temp} />
+      <Wind wind={wind} />
     </div>
   );
 }

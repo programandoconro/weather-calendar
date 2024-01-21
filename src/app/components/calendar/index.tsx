@@ -9,7 +9,7 @@ import {
   fetchCurrentWeather,
   fetchWeatherForecast,
 } from "@/app/actions/fetch-weather";
-import Current from "../current";
+import CurrentWeatherCard from "../current-weather-card";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -61,7 +61,7 @@ export default function Calendar(props: {
   return (
     <div className={styles.calendar}>
       <div className={styles.card}>
-        <Current currentWeather={currentWeather} />
+        <CurrentWeatherCard currentWeather={currentWeather} />
         {forecasts}
       </div>
     </div>
