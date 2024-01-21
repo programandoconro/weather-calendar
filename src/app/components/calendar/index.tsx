@@ -1,16 +1,20 @@
 "use client";
 
-import { Weather } from "../../model";
+import { CurrentWeather, WeatherForecast } from "../../model";
 import Day from "../day";
 import styles from "./calendar.module.css";
 import useSWR, { SWRConfiguration } from "swr";
 import { logError } from "@/app/actions/log-error";
-import { fetchWeather } from "@/app/actions/fetch-weather";
+import { fetchWeatherForecast } from "@/app/actions/fetch-weather";
+import Current from "../current";
 
 const ONE_MINUTE = 1000 * 60;
 
-export default function Calendar(props: { initialForecast: Weather[] }) {
-  const { initialForecast } = props;
+export default function Calendar(props: {
+  initialForecast: WeatherForecast[];
+  currentWeather: CurrentWeather;
+}) {
+  const { initialForecast, currentWeather } = props;
 
   const swrConfiguration: SWRConfiguration = {
     refreshInterval: ONE_MINUTE,
@@ -22,7 +26,7 @@ export default function Calendar(props: { initialForecast: Weather[] }) {
 
   const { data: forecast, error } = useSWR(
     "url in server action",
-    fetchWeather,
+    fetchWeatherForecast,
     swrConfiguration
   );
 
@@ -37,13 +41,16 @@ export default function Calendar(props: { initialForecast: Weather[] }) {
 
   const indexOfDaysToForecast = Object.keys(forecast);
 
-  const days = indexOfDaysToForecast.map((dayIndex) => {
+  const forecasts = indexOfDaysToForecast.map((dayIndex) => {
     return <Day key={dayIndex} weather={forecast[+dayIndex]} />;
   });
 
   return (
     <div className={styles.calendar}>
-      <div className={styles.card}>{days}</div>
+      <div className={styles.card}>
+        <Current currentWeather={currentWeather} />
+        {forecasts}
+      </div>
     </div>
   );
 }

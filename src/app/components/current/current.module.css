@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  color: whitesmoke;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  border-radius: 5px;
+  padding: 10px 0;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.icon {
+  transform: translateY(5px);
+  z-index: 2;
+}
+
+.wind {
+  transform: translateY(5px);
+}
+
+.icon:hover {
+  .popup {
+    opacity: 1;
+  }
+}
+
+.popup {
+  text-transform: capitalize;
+  top: 50%;
+  left: 50%;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  position: absolute;
+  transition: opacity 0.3s ease-in-out;
+  background-color: whitesmoke;
+  color: var(--dark-purple);
+  font-weight: 600;
+  width: fit-content;
+  opacity: 0;
+}

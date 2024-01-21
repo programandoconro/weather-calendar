@@ -1,12 +1,13 @@
 "use server";
-import { unstable_noStore } from "next/cache";
-import { Weather } from "../model";
+import { unstable_noStore as noStore } from "next/cache";
+import { CurrentWeather, WeatherForecast } from "../model";
 import groupByday from "../utils/group-by-day";
 
 async function noCacheFetch<T>(
   url: string,
   method: "PUT" | "GET" | "POST"
 ): Promise<T> {
+  noStore();
   try {
     const response = await fetch(url, {
       cache: "no-store",
@@ -21,17 +22,36 @@ async function noCacheFetch<T>(
   }
 }
 
-export async function fetchWeather(): Promise<Weather[] | undefined> {
-  unstable_noStore();
+const getQuery = () => {
   const lat = process.env.LAT;
   const lon = process.env.LON;
   const apiKey = process.env.API_KEY;
-
   const query = `lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
-  const OPEN_WEATHER_URL = `http://api.openweathermap.org/data/2.5/forecast?${query}`;
 
-  const data = await noCacheFetch<{ list: Weather }>(OPEN_WEATHER_URL, "GET");
+  return { query };
+};
+
+export async function fetchWeatherForecast(): Promise<
+  WeatherForecast[] | undefined
+> {
+  const { query } = getQuery();
+  const URL = `http://api.openweathermap.org/data/2.5/forecast?${query}`;
+
+  const data = await noCacheFetch<{ list: WeatherForecast }>(URL, "GET");
   if (!data) return;
+
   const response = groupByday(data.list);
+  return response;
+}
+
+export async function fetchCurrentWeather(): Promise<
+  CurrentWeather | undefined
+> {
+  const { query } = getQuery();
+  const URL = `http://api.openweathermap.org/data/2.5/weather?${query}`;
+
+  const response = await noCacheFetch<CurrentWeather>(URL, "GET");
+  if (!response) return;
+
   return response;
 }

@@ -1,11 +1,11 @@
-import { Forecast, Weather } from "../../model";
+import { Forecast, WeatherForecast } from "../../model";
 import reduceDayForecasts from "../../utils/reduce-day-forecasts";
 import styles from "./day.module.css";
 import ForecastCard from "../forecast-card";
 import { dayOfWeekInJapanese } from "../../utils/day-of-week";
 import { japaneseFormatDate } from "@/app/utils/japanese-format-date";
 
-export default function Day(props: { weather: Weather | null }) {
+export default function Day(props: { weather: WeatherForecast | null }) {
   const { weather } = props;
   if (!weather) return null;
 
