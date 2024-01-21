@@ -6,6 +6,8 @@
   border-radius: 5px;
   padding: 10px 0;
   margin: 10px;
+  max-width: 500px;
+  overflow-x: hidden;
 }
 
 .icon {
@@ -32,4 +34,21 @@
   font-weight: 600;
   width: fit-content;
   opacity: 0;
+}
+
+@media (min-width: 600px) {
+  .container {
+    margin: 10px auto;
+  }
+}
+
+@media (max-width: 300px) {
+  .container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+  }
+  .popup {
+    left: 0%;
+  }
 }

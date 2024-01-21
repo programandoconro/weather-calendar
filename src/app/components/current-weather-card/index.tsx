@@ -16,7 +16,7 @@ export default function CurrentWeatherCard(props: {
       className={styles.container}
       style={{ backgroundColor: weatherBackgroundColor(main) }}
     >
-      <h5>現在天気：</h5>
+      <h5>現在天気</h5>
       <div className={styles.icon}>
         <WeatherIcon icon={icon} />
         <div className={styles.popup} role="dialog">
