@@ -10,7 +10,6 @@ import {
   fetchWeatherForecast,
 } from "@/app/actions/fetch-weather";
 import Current from "../current";
-import { useEffect } from "react";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -38,9 +37,6 @@ export default function Calendar(props: {
     fetchCurrentWeather,
     { ...swrConfiguration, fallbackData: initialCurrentWeather }
   );
-  useEffect(() => {
-    console.log(currentWeather);
-  }, [currentWeather]);
 
   if (!forecast || !currentWeather) {
     if (forecastError) {

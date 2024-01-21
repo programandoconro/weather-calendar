@@ -1,38 +1,49 @@
-export type WeatherForecast = {
-  dt_txt: string;
-  main: { temp: string };
-  weather: {
-    main: string;
-    description: string;
-    icon: string;
-  }[];
-  wind: {
-    speed: number;
-  };
-}[];
+import { z } from "zod";
+
+export type WeatherForecast = z.infer<typeof weatherForecastSchema>;
+export const weatherForecastSchema = z.array(
+  z.object({
+    dt_txt: z.string(),
+    main: z.object({
+      temp: z.number(),
+    }),
+    weather: z.array(
+      z.object({
+        main: z.string(),
+        description: z.string(),
+        icon: z.string(),
+      })
+    ),
+    wind: z.object({
+      speed: z.number(),
+    }),
+  })
+);
+
+export type CurrentWeather = z.infer<typeof currentWeatherSchema>;
+export const currentWeatherSchema = z.object({
+  weather: z.array(
+    z.object({
+      main: z.string(),
+      description: z.string(),
+      icon: z.string(),
+    })
+  ),
+  main: z.object({
+    temp: z.number(),
+  }),
+  wind: z.object({
+    speed: z.number(),
+  }),
+});
 
 export type Forecast = {
   dt_txt: Date;
-  temp: string;
+  temp: number;
   icon: string;
   wind: number;
   description: string;
   main: string;
-};
-
-export type CurrentWeather = {
-  weather: {
-    main: string;
-    description: string;
-    icon: string;
-  }[];
-
-  main: {
-    temp: number;
-  };
-  wind: {
-    speed: number;
-  };
 };
 
 export type Hours = number;

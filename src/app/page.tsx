@@ -10,11 +10,10 @@ export default async function Home() {
     fetchCurrentWeather(),
   ]);
 
-  if (!weatherForecast)
-    return <div>An error ocurred while fetching the weather forecast data</div>;
-
-  if (!currentWeather)
-    return <div>An error ocurred while fetching the current weather data</div>;
+  if (!weatherForecast || !currentWeather)
+    return (
+      <div style={{ color: "white" }}>An error ocurred while fetching data</div>
+    );
 
   return (
     <div>

@@ -1,6 +1,11 @@
 "use server";
 import { unstable_noStore as noStore } from "next/cache";
-import { CurrentWeather, WeatherForecast } from "../model";
+import {
+  CurrentWeather,
+  currentWeatherSchema,
+  WeatherForecast,
+  weatherForecastSchema,
+} from "../model";
 import groupByday from "../utils/group-by-day";
 
 async function noCacheFetch<T>(
@@ -38,10 +43,15 @@ export async function fetchWeatherForecast(): Promise<
   const URL = `http://api.openweathermap.org/data/2.5/forecast?${query}`;
 
   const data = await noCacheFetch<{ list: WeatherForecast }>(URL, "GET");
-  if (!data) return;
 
-  const response = groupByday(data.list);
-  return response;
+  try {
+    const validatedResponse: WeatherForecast = weatherForecastSchema.parse(
+      data?.list
+    );
+    return groupByday(validatedResponse);
+  } catch (e) {
+    return undefined;
+  }
 }
 
 export async function fetchCurrentWeather(): Promise<
@@ -53,5 +63,11 @@ export async function fetchCurrentWeather(): Promise<
   const response = await noCacheFetch<CurrentWeather>(URL, "GET");
   if (!response) return;
 
-  return response;
+  try {
+    const validatedResponse = currentWeatherSchema.parse(response);
+
+    return validatedResponse;
+  } catch {
+    return undefined;
+  }
 }
