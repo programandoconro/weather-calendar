@@ -7,14 +7,18 @@ export default function groupByday(data: WeatherForecast): WeatherForecast[] {
     return date.getDate().toString();
   });
 
-  return Object.values(grouped).map((v) => v);
+  return grouped;
 }
 
-const groupBy = <T>(
-  array: T[],
-  predicate: (value: T, index: number, array: T[]) => string
-) =>
-  array.reduce((acc, value, index, array) => {
-    (acc[predicate(value, index, array)] ||= []).push(value);
+const groupBy = <T>(array: T[], findKey: (value: T) => string): T[][] =>
+  array.reduce((acc, value) => {
+    const index = acc.findIndex(
+      (group) => group[0] && findKey(group[0]) === findKey(value)
+    );
+    if (index !== -1) {
+      acc[index].push(value);
+    } else {
+      acc.push([value]);
+    }
     return acc;
-  }, {} as { [key: string]: T[] });
+  }, [] as T[][]);
