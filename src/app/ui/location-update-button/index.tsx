@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useContext } from "react";
+import { useContext } from "react";
 import styles from "./location-button.module.css";
 import { LocationContext } from "@/app/store/location-context";
 
