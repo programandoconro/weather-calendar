@@ -1,0 +1,37 @@
+.container {
+  position: absolute;
+  right: 10px;
+  top: 6px;
+  display: flex;
+  height: 40px;
+  width: 40px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: rgb(1, 61, 81);
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 7px;
+  border-radius: 5px;
+}
+.container button {
+  background-color: inherit;
+  border: none;
+  font-size: larger;
+}
+
+.container .popup {
+  background-color: whitesmoke;
+  position: absolute;
+  width: 200px;
+  transform: translateX(-100%) translateY(-25%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 7px;
+  border-radius: 5px;
+  font-size: medium;
+}
+
+.container:hover {
+  .popup {
+    opacity: 1;
+  }
+}
