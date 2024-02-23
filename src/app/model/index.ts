@@ -48,10 +48,12 @@ export type Forecast = {
 
 export type Hours = number;
 
-export type Location = {
-  location: {
-    latitude: string;
-    longitude: string;
-  };
+export type LocationState = {
+  location: Location;
   setLocation: (lat: string, lon: string) => void;
+};
+
+export type Location = {
+  latitude: string;
+  longitude: string;
 };

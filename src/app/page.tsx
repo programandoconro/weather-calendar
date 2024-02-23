@@ -5,11 +5,13 @@ import {
 } from "./actions/fetch-weather";
 
 export default async function Home() {
-  const lat = process.env.LAT || "";
-  const lon = process.env.LON || "";
+  const location = {
+    latitude: process.env.LAT as string,
+    longitude: process.env.LON as string,
+  };
   const [weatherForecast, currentWeather] = await Promise.all([
-    fetchWeatherForecast(lat, lon),
-    fetchCurrentWeather(lat, lon),
+    fetchWeatherForecast({ location }),
+    fetchCurrentWeather({ location }),
   ]);
 
   if (!weatherForecast || !currentWeather)

@@ -3,6 +3,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import {
   CurrentWeather,
   currentWeatherSchema,
+  LocationState,
   WeatherForecast,
   weatherForecastSchema,
 } from "../model";
@@ -27,7 +28,8 @@ async function noCacheFetch<T>(
   }
 }
 
-const getQuery = (latitude: string, longitude: string) => {
+const getQuery = (props: Pick<LocationState, "location">) => {
+  const { latitude, longitude } = props.location;
   const lat = latitude || process.env.LAT;
   const lon = longitude || process.env.LON;
   const apiKey = process.env.API_KEY;
@@ -37,10 +39,9 @@ const getQuery = (latitude: string, longitude: string) => {
 };
 
 export async function fetchWeatherForecast(
-  lat: string,
-  lon: string
+  props: Pick<LocationState, "location">
 ): Promise<WeatherForecast[] | undefined> {
-  const { query } = getQuery(lat, lon);
+  const { query } = getQuery(props);
   const URL = `http://api.openweathermap.org/data/2.5/forecast?${query}`;
 
   const data = await noCacheFetch<{ list: WeatherForecast }>(URL, "GET");
@@ -56,10 +57,9 @@ export async function fetchWeatherForecast(
 }
 
 export async function fetchCurrentWeather(
-  lat: string,
-  lon: string
+  props: Pick<LocationState, "location">
 ): Promise<CurrentWeather | undefined> {
-  const { query } = getQuery(lat, lon);
+  const { query } = getQuery(props);
   const URL = `http://api.openweathermap.org/data/2.5/weather?${query}`;
 
   const response = await noCacheFetch<CurrentWeather>(URL, "GET");

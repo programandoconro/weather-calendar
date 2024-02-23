@@ -4,7 +4,7 @@ import styles from "./calendar.module.css";
 import { CurrentWeather, WeatherForecast } from "../../model";
 import Day from "../day";
 import CurrentWeatherCard from "../current-weather-card";
-import LocationUpdateButton from "../location-update-button";
+import LocationUpdateButton from "../../ui/location-update-button";
 import { logError } from "@/app/actions/log-error";
 import {
   fetchCurrentWeather,
@@ -32,12 +32,11 @@ export default function Calendar(props: {
     keepPreviousData: true,
   };
 
-  const { latitude, longitude } = location;
   const fetchCurrent = () => {
-    return fetchCurrentWeather(latitude, longitude);
+    return fetchCurrentWeather({ location });
   };
   const fetchForecast = () => {
-    return fetchWeatherForecast(latitude, longitude);
+    return fetchWeatherForecast({ location });
   };
 
   const {

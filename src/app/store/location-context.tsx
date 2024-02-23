@@ -1,16 +1,16 @@
 import { createContext, useState } from "react";
-import { Location } from "../model";
+import { LocationState } from "../model";
 
-const initalState: Location = {
+const initalState: LocationState = {
   location: {
-    latitude: process.env.LAT || "",
-    longitude: process.env.LON || "",
+    latitude: process.env.LAT as string,
+    longitude: process.env.LON as string,
   },
-  setLocation: (lat: string, lon: string) => null,
+  setLocation: (_lat: string, _lon: string) => null,
 };
-export const LocationContext = createContext<Location>(initalState);
+export const LocationContext = createContext<LocationState>(initalState);
 
-export default function useLocationContext(): Location {
+export default function useLocationContext(): LocationState {
   const [location, setLocation] = useState(initalState.location);
 
   const onLocationChange = (latitude: string, longitude: string) => {
