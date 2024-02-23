@@ -1,5 +1,5 @@
 .container {
-  position: absolute;
+  position: fixed;
   right: 10px;
   top: 6px;
   display: flex;
@@ -7,31 +7,38 @@
   width: 40px;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   background-color: rgb(1, 61, 81);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 7px;
   border-radius: 5px;
+  z-index: 3;
 }
 .container button {
   background-color: inherit;
   border: none;
-  font-size: larger;
+  font-size: medium;
+  color: whitesmoke;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
 }
 
 .container .popup {
   background-color: whitesmoke;
   position: absolute;
   width: 200px;
-  transform: translateX(-100%) translateY(-25%);
+  transform: translateX(-120px) translateY(10px);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 7px;
   border-radius: 5px;
-  font-size: medium;
+  color: black;
 }
 
-.container:hover {
-  .popup {
-    opacity: 1;
+@media (min-width: 500px) {
+  .container:hover {
+    .popup {
+      opacity: 1;
+    }
   }
 }
