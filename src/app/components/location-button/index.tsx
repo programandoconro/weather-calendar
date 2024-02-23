@@ -9,6 +9,9 @@ export default function LocationButton() {
       const { latitude, longitude } = loc.coords;
       if (latitude && longitude) {
         setLocation(String(latitude), String(longitude));
+        alert(
+          `位置情報は更新されました。緯度は：${latitude}です。軽度は：${longitude}です。`
+        );
       }
     });
   }

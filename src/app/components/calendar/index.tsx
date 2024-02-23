@@ -1,19 +1,20 @@
 "use client";
 
+import styles from "./calendar.module.css";
 import { CurrentWeather, WeatherForecast } from "../../model";
 import Day from "../day";
-import styles from "./calendar.module.css";
-import useSWR, { SWRConfiguration } from "swr";
+import CurrentWeatherCard from "../current-weather-card";
+import LocationButton from "../location-button";
 import { logError } from "@/app/actions/log-error";
 import {
   fetchCurrentWeather,
   fetchWeatherForecast,
 } from "@/app/actions/fetch-weather";
-import CurrentWeatherCard from "../current-weather-card";
-import LocationButton from "../location-button";
+import { useEffect } from "react";
 import useLocationContext, {
   LocationContext,
 } from "@/app/store/location-context";
+import useSWR, { SWRConfiguration } from "swr";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -39,17 +40,29 @@ export default function Calendar(props: {
     return fetchWeatherForecast(latitude, longitude);
   };
 
-  const { data: forecast, error: forecastError } = useSWR(
-    "url for forecast weather in server action",
-    fetchForecast,
-    { ...swrConfiguration, fallbackData: initialForecast }
-  );
+  const {
+    data: forecast,
+    error: forecastError,
+    mutate: mutateForecast,
+  } = useSWR("url for forecast weather in server action", fetchForecast, {
+    ...swrConfiguration,
+    fallbackData: initialForecast,
+  });
 
-  const { data: currentWeather, error: currentError } = useSWR(
-    "url for current weather in server action",
-    fetchCurrent,
-    { ...swrConfiguration, fallbackData: initialCurrentWeather }
-  );
+  const {
+    data: currentWeather,
+    error: currentError,
+    mutate: mutateCurrent,
+  } = useSWR("url for current weather in server action", fetchCurrent, {
+    ...swrConfiguration,
+    fallbackData: initialCurrentWeather,
+  });
+
+  useEffect(() => {
+    mutateCurrent();
+    mutateForecast();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   if (!forecast || !currentWeather) {
     if (forecastError) {
