@@ -27,19 +27,20 @@ async function noCacheFetch<T>(
   }
 }
 
-const getQuery = () => {
-  const lat = process.env.LAT;
-  const lon = process.env.LON;
+const getQuery = (latitude: string, longitude: string) => {
+  const lat = latitude || process.env.LAT;
+  const lon = longitude || process.env.LON;
   const apiKey = process.env.API_KEY;
   const query = `lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
   return { query };
 };
 
-export async function fetchWeatherForecast(): Promise<
-  WeatherForecast[] | undefined
-> {
-  const { query } = getQuery();
+export async function fetchWeatherForecast(
+  lat: string,
+  lon: string
+): Promise<WeatherForecast[] | undefined> {
+  const { query } = getQuery(lat, lon);
   const URL = `http://api.openweathermap.org/data/2.5/forecast?${query}`;
 
   const data = await noCacheFetch<{ list: WeatherForecast }>(URL, "GET");
@@ -54,10 +55,11 @@ export async function fetchWeatherForecast(): Promise<
   }
 }
 
-export async function fetchCurrentWeather(): Promise<
-  CurrentWeather | undefined
-> {
-  const { query } = getQuery();
+export async function fetchCurrentWeather(
+  lat: string,
+  lon: string
+): Promise<CurrentWeather | undefined> {
+  const { query } = getQuery(lat, lon);
   const URL = `http://api.openweathermap.org/data/2.5/weather?${query}`;
 
   const response = await noCacheFetch<CurrentWeather>(URL, "GET");

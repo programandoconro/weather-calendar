@@ -11,6 +11,9 @@ import {
 } from "@/app/actions/fetch-weather";
 import CurrentWeatherCard from "../current-weather-card";
 import LocationButton from "../location-button";
+import useLocationContext, {
+  LocationContext,
+} from "@/app/store/location-context";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -19,6 +22,7 @@ export default function Calendar(props: {
   initialCurrentWeather: CurrentWeather;
 }) {
   const { initialForecast, initialCurrentWeather } = props;
+  const { location, setLocation } = useLocationContext();
 
   const swrConfiguration: SWRConfiguration = {
     refreshInterval: ONE_MINUTE,
@@ -27,15 +31,23 @@ export default function Calendar(props: {
     keepPreviousData: true,
   };
 
+  const { latitude, longitude } = location;
+  const fetchCurrent = () => {
+    return fetchCurrentWeather(latitude, longitude);
+  };
+  const fetchForecast = () => {
+    return fetchWeatherForecast(latitude, longitude);
+  };
+
   const { data: forecast, error: forecastError } = useSWR(
     "url for forecast weather in server action",
-    fetchWeatherForecast,
+    fetchForecast,
     { ...swrConfiguration, fallbackData: initialForecast }
   );
 
   const { data: currentWeather, error: currentError } = useSWR(
     "url for current weather in server action",
-    fetchCurrentWeather,
+    fetchCurrent,
     { ...swrConfiguration, fallbackData: initialCurrentWeather }
   );
 
@@ -60,14 +72,16 @@ export default function Calendar(props: {
   });
 
   return (
-    <div className={styles.calendar}>
-      <div className={styles.card}>
-        <LocationButton />
-        <h2 className={styles.current}>今の天気：</h2>
-        <CurrentWeatherCard currentWeather={currentWeather} />
-        <h1 className={styles.forecast}>天気予報</h1>
-        {forecasts}
+    <LocationContext.Provider value={{ location, setLocation }}>
+      <div className={styles.calendar}>
+        <div className={styles.card}>
+          <LocationButton />
+          <h2 className={styles.current}>今の天気：</h2>
+          <CurrentWeatherCard currentWeather={currentWeather} />
+          <h1 className={styles.forecast}>天気予報</h1>
+          {forecasts}
+        </div>
       </div>
-    </div>
+    </LocationContext.Provider>
   );
 }

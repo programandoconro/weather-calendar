@@ -47,3 +47,11 @@ export type Forecast = {
 };
 
 export type Hours = number;
+
+export type Location = {
+  location: {
+    latitude: string;
+    longitude: string;
+  };
+  setLocation: (lat: string, lon: string) => void;
+};
