@@ -4,6 +4,10 @@
 
 ### A Nextjs 14 app with vercel deployment, and weather forecasts from openweathermap.org API
 
-### **_It gets 5 days weather forecast for local weather in Tokyo/Japan_**
+### **_It gets current weather and 5 days weather forecast with 3 hours interval_**
 
-### With SSR for fast page load and SWR to revalidate data with server actions
+### With SSR for fast page first load
+
+### With SWR and Server Actions to update forecast every minute
+
+### It allows to change target coordinates using device's current geolocation
