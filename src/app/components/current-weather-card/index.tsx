@@ -1,5 +1,5 @@
 import { CurrentWeather } from "@/app/model";
-import styles from "./current-wather-card.module.css";
+import styles from "./current-weather-card.module.css";
 import { weatherBackgroundColor } from "@/app/utils/weather-background-color";
 import WeatherIcon from "@/app/ui/weather-icon";
 import Temperature from "@/app/ui/temperature";

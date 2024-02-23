@@ -10,6 +10,7 @@ import {
   fetchWeatherForecast,
 } from "@/app/actions/fetch-weather";
 import CurrentWeatherCard from "../current-weather-card";
+import LocationButton from "../location-button";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -61,6 +62,7 @@ export default function Calendar(props: {
   return (
     <div className={styles.calendar}>
       <div className={styles.card}>
+        <LocationButton />
         <h2 className={styles.current}>今の天気：</h2>
         <CurrentWeatherCard currentWeather={currentWeather} />
         <h1 className={styles.forecast}>天気予報</h1>
