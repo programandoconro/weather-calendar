@@ -6,7 +6,7 @@ export function weatherBackgroundColor(
 ): CSSProperties["color"] {
   switch (weather) {
     case "Clear": {
-      return "#345693"; // Dark Blue
+      return "#345688"; // Clear Blue
     }
     case "Clouds": {
       return "#444444"; // Dark Gray
