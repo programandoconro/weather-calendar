@@ -23,12 +23,11 @@
 .current {
   max-width: 500px;
   margin: 0 auto;
-  font-size: large;
+  font-size: x-large;
 }
 
 .forecast {
   text-align: center;
-  margin: 10px auto;
   background-color: rgb(1, 61, 81);
   height: 70px;
   display: flex;

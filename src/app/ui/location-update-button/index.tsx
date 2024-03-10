@@ -22,9 +22,9 @@ export default function LocationUpdateButton() {
     <div className={styles.container}>
       <button type="button" tabIndex={0} onClick={onClick}>
         <Image
-          src="/location.png"
-          height={25}
-          width={25}
+          className="location-icon"
+          layout="fill"
+          src="/location-icon.png"
           alt="Location icon"
           priority
         />

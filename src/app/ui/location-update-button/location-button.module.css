@@ -1,10 +1,10 @@
 .container {
   position: absolute;
-  right: 10px;
-  top: 6px;
+  right: 15px;
+  top: 10px;
   display: flex;
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   justify-content: center;
   align-items: center;
   background-color: rgb(1, 61, 81);
@@ -22,6 +22,9 @@
   width: 100%;
   border-radius: 5px;
 }
+.container img {
+  padding: 5px;
+}
 
 .container .popup {
   background-color: whitesmoke;
@@ -29,7 +32,7 @@
   width: 200px;
   transform: translateX(-120px) translateY(10px);
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.6s ease-in-out;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 7px;
   border-radius: 5px;
   color: black;
@@ -40,5 +43,11 @@
     .popup {
       opacity: 1;
     }
+  }
+}
+@media (min-width: 800px) {
+  .container {
+    width: 45px;
+    height: 45px;
   }
 }
