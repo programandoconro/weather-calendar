@@ -12,7 +12,7 @@ export function weatherBackgroundColor(
       return "#444444"; // Dark Gray
     }
     case "Rain": {
-      return "#1F2F3F"; // Dark Slate Blue
+      return "#492F2F"; // Dark Slate Blue
     }
     case "Snow": {
       return "#36454F"; // Darker Slate Gray
