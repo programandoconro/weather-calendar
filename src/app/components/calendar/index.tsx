@@ -15,6 +15,7 @@ import useLocationContext, {
   LocationContext,
 } from "@/app/store/location-context";
 import useSWR, { SWRConfiguration } from "swr";
+import ErrorBoundary from "../error-boundary";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -84,16 +85,18 @@ export default function Calendar(props: {
   });
 
   return (
-    <LocationContext.Provider value={{ location, setLocation }}>
-      <div className={styles.calendar}>
-        <div className={styles.card}>
-          <LocationUpdateButton />
-          <h2 className={styles.current}>今の天気：</h2>
-          <CurrentWeatherCard currentWeather={currentWeather} />
-          <h1 className={styles.forecast}>天気予報</h1>
-          {forecasts}
+    <ErrorBoundary>
+      <LocationContext.Provider value={{ location, setLocation }}>
+        <div className={styles.calendar}>
+          <div className={styles.card}>
+            <LocationUpdateButton />
+            <h2 className={styles.current}>今の天気：</h2>
+            <CurrentWeatherCard currentWeather={currentWeather} />
+            <h1 className={styles.forecast}>天気予報</h1>
+            {forecasts}
+          </div>
         </div>
-      </div>
-    </LocationContext.Provider>
+      </LocationContext.Provider>
+    </ErrorBoundary>
   );
 }

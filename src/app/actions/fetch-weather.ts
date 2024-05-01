@@ -8,6 +8,7 @@ import {
   weatherForecastSchema,
 } from "../model";
 import groupByday from "../utils/group-by-day";
+import { logError } from "./log-error";
 
 async function noCacheFetch<T>(
   url: string,
@@ -20,10 +21,14 @@ async function noCacheFetch<T>(
       method,
     });
     if (!response.ok) {
+      const error = new Error("Failed to fetching data, response not ok");
+      logError(error);
       throw new Error("failed to fetch");
     }
     return response.json();
   } catch (e) {
+    const error = new Error(`There was an error fetching ${e}`);
+    logError(error);
     throw new Error(`There was an error fetching ${e}`);
   }
 }
@@ -46,12 +51,20 @@ export async function fetchWeatherForecast(
 
   const data = await noCacheFetch<{ list: WeatherForecast }>(URL, "GET");
 
+  if (!data?.list) {
+    const error = new Error("Failed to fetch weather forecast");
+    logError(error);
+    return;
+  }
+
   try {
     const validatedResponse: WeatherForecast = weatherForecastSchema.parse(
       data?.list
     );
     return groupByday(validatedResponse);
   } catch (e) {
+    const error = new Error(`Failed to validate weather forecast ${e}`);
+    logError(error);
     return undefined;
   }
 }
@@ -63,13 +76,19 @@ export async function fetchCurrentWeather(
   const URL = `http://api.openweathermap.org/data/2.5/weather?${query}`;
 
   const response = await noCacheFetch<CurrentWeather>(URL, "GET");
-  if (!response) return;
+  if (!response.main.temp) {
+    const error = new Error("Failed to fetch current weather");
+    logError(error);
+    return;
+  }
 
   try {
     const validatedResponse = currentWeatherSchema.parse(response);
 
     return validatedResponse;
-  } catch {
+  } catch (e) {
+    const error = new Error(`Failed to validate current weather data${e}`);
+    logError(error);
     return undefined;
   }
 }
