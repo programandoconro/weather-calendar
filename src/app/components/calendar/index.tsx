@@ -16,6 +16,7 @@ import useLocationContext, {
 } from "@/app/store/location-context";
 import useSWR, { SWRConfiguration } from "swr";
 import ErrorBoundary from "../error-boundary";
+import { Map } from "../map";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -89,6 +90,7 @@ export default function Calendar(props: {
       <LocationContext.Provider value={{ location, setLocation }}>
         <div className={styles.calendar}>
           <div className={styles.card}>
+            <Map />
             <LocationUpdateButton />
             <h2 className={styles.current}>今の天気：</h2>
             <CurrentWeatherCard currentWeather={currentWeather} />
