@@ -18,7 +18,7 @@ export default async function Home() {
   ]).catch(() => []);
 
   if (!weatherForecast || !currentWeather) {
-    const error = new Error("Coud not render the weather calendar");
+    const error = new Error("Could not render the weather calendar");
     logError(error);
 
     return (

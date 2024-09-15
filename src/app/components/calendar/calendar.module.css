@@ -49,6 +49,9 @@
   .calendar {
     padding: 0;
   }
+  .current {
+    text-align: center;
+  }
 }
 
 @media (max-width: 500px) {
