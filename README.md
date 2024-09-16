@@ -10,4 +10,6 @@
 
 ### With SWR and Server Actions to update forecast every minute
 
-### It allows to change target coordinates using device's current geolocation
+### It allows to change target coordinates using device's current geo-location.
+
+### Location can also be selected in a map (open street map)

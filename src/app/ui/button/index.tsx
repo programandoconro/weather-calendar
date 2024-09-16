@@ -26,12 +26,12 @@ export const Button = (props: Props) => {
 
 type Props = {
   isLoading?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   imageProps: {
     width: number;
     height: number;
     src: string;
     alt: string;
-    priority: boolean;
+    priority?: boolean;
   };
 };

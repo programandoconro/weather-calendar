@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { useBrowserGeolocation } from "../../hooks/use-browser-geolocation";
 import { useSelector } from "react-redux";
 import styles from "./map.module.css";
+import { Button } from "@/app/ui/button";
+import Link from "next/link";
 
 export const Map = () => {
   const { getUserCurrentPosition } = useBrowserGeolocation();
@@ -26,6 +28,19 @@ export const Map = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.home}>
+        <Link href="/">
+          <Button
+            imageProps={{
+              src: "/home.png",
+              width: 35,
+              height: 35,
+              priority: true,
+              alt: "Home icon",
+            }}
+          />
+        </Link>
+      </div>
       <div className="flex justify-center w-full overflow-hidden">
         <MapContainer center={centerLocation} zoom={13} scrollWheelZoom>
           <TileLayer
