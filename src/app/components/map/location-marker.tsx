@@ -1,22 +1,28 @@
+"use client";
 import { useMemo, useRef } from "react";
 import { Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
+import { useDispatch } from "react-redux";
+import { setCoordinates } from "../../store/reducers/coordinates";
+import { Location } from "../../model";
 
 const ICON = L.icon({
   iconUrl: "/location-icon.png",
   iconSize: [50, 50],
 });
 
-export function LocationMarker(props: {
-  location: LatLngExpression;
-  setLocation: (l: LatLngExpression) => void;
-}) {
-  const { location, setLocation } = props;
+export function LocationMarker(props: { coordinates: Location }) {
+  const dispatch = useDispatch();
   const map = useMapEvents({
     click(e) {
       map.locate();
-      setLocation(e.latlng);
+      dispatch(
+        setCoordinates({
+          latitude: e.latlng.lat.toString(),
+          longitude: e.latlng.lng.toString(),
+        })
+      );
     },
   });
   const markerRef = useRef<L.Marker>(null);
@@ -25,19 +31,29 @@ export function LocationMarker(props: {
       dragend() {
         const marker = markerRef.current;
         if (marker != null) {
-          setLocation(marker.getLatLng());
+          const { lat, lng } = marker?.getLatLng();
+          dispatch(
+            setCoordinates({
+              latitude: lat.toString(),
+              longitude: lng.toString(),
+            })
+          );
         }
       },
     }),
-    [setLocation]
+    [dispatch]
   );
-  return location === null ? null : (
+  const location: LatLngExpression = {
+    lat: Number(props.coordinates.latitude),
+    lng: Number(props.coordinates.longitude),
+  };
+  return (
     <Marker
       ref={markerRef}
       icon={ICON}
       position={location}
       draggable
       eventHandlers={eventHandlers}
-    ></Marker>
+    />
   );
 }

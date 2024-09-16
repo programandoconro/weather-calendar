@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./button.module.css";
+import { Spinner } from "../spinner";
 
 export const Button = (props: Props) => {
   const { isLoading, onClick, imageProps } = props;
@@ -8,7 +9,7 @@ export const Button = (props: Props) => {
     <div className={styles.container}>
       <button type="button" tabIndex={0} onClick={onClick}>
         {isLoading ? (
-          <span className={styles.loader}></span>
+          <Spinner />
         ) : (
           <Image
             alt={alt}
