@@ -4,7 +4,6 @@ import styles from "./calendar.module.css";
 import { CurrentWeather, WeatherForecast } from "../../model";
 import Day from "../day";
 import CurrentWeatherCard from "../current-weather-card";
-import LocationUpdateButton from "../../ui/location-update-button";
 import { logError } from "@/app/actions/log-error";
 import {
   fetchCurrentWeather,
@@ -17,6 +16,7 @@ import useLocationContext, {
 import useSWR, { SWRConfiguration } from "swr";
 import ErrorBoundary from "../error-boundary";
 import { Map } from "../map";
+import { Header } from "../header";
 
 const ONE_MINUTE = 1000 * 60;
 
@@ -90,8 +90,8 @@ export default function Calendar(props: {
       <LocationContext.Provider value={{ location, setLocation }}>
         <div className={styles.calendar}>
           <div className={styles.card}>
-            <Map />
-            <LocationUpdateButton />
+            {/*  <Map />*/}
+            <Header />
             <h2 className={styles.current}>今の天気：</h2>
             <CurrentWeatherCard currentWeather={currentWeather} />
             <h1 className={styles.forecast}>天気予報</h1>
