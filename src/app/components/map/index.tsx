@@ -1,27 +1,34 @@
 "use client";
-import { MapContainer, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import { LatLngExpression } from "leaflet";
-import { LocationMarker } from "./location-marker";
-import { RootState } from "../../store";
 import { useEffect } from "react";
-import { useBrowserGeolocation } from "../../hooks/use-browser-geolocation";
+import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-import styles from "./map.module.css";
-import { Button } from "@/app/ui/button";
+import { useBrowserGeolocation } from "../../hooks/use-browser-geolocation";
+
+import { MapContainer, TileLayer } from "react-leaflet";
+import { LatLngExpression } from "leaflet";
 import Link from "next/link";
+import { Button } from "@/app/ui/button";
 import { ToastContainer } from "react-toastify";
+
+import { LocationMarker } from "./location-marker";
+import { InputSearch } from "@/app/components/map/input-search";
+
 import "react-toastify/dist/ReactToastify.css";
+import "leaflet/dist/leaflet.css";
+import styles from "./map.module.css";
 
 export const Map = () => {
   const { getUserCurrentPosition } = useBrowserGeolocation();
-  useEffect(() => {
-    getUserCurrentPosition();
-  }, []);
-
   const coordinates = useSelector((state: RootState) => state.coordinates);
+  const hasCoordinates = coordinates.latitude && coordinates.longitude;
 
-  if (!coordinates.latitude || !coordinates.longitude) return <div>Error</div>;
+  useEffect(() => {
+    if (!hasCoordinates) {
+      getUserCurrentPosition();
+    }
+  }, [hasCoordinates, getUserCurrentPosition]);
+
+  if (!hasCoordinates) return <div>Error getting coordinates</div>;
 
   const centerLocation: LatLngExpression = {
     lat: Number(coordinates.latitude),
@@ -30,6 +37,7 @@ export const Map = () => {
 
   return (
     <div className={styles.container}>
+      <InputSearch />
       <div className={styles.home}>
         <Link href="/">
           <Button
@@ -52,7 +60,7 @@ export const Map = () => {
           <LocationMarker coordinates={coordinates} />
         </MapContainer>
       </div>
-      <ToastContainer position="bottom-left" autoClose={10000} />
+      <ToastContainer position="bottom-left" autoClose={5000} />
     </div>
   );
 };

@@ -7,7 +7,7 @@ import {
   WeatherForecast,
   weatherForecastSchema,
 } from "../model";
-import groupByday from "../utils/group-by-day";
+import groupByDay from "../utils/group-by-day";
 import { logError } from "./log-error";
 
 async function noCacheFetch<T>(
@@ -61,7 +61,7 @@ export async function fetchWeatherForecast(
     const validatedResponse: WeatherForecast = weatherForecastSchema.parse(
       data?.list
     );
-    return groupByday(validatedResponse);
+    return groupByDay(validatedResponse);
   } catch (e) {
     const error = new Error(`Failed to validate weather forecast ${e}`);
     logError(error);
