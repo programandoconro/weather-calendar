@@ -10,6 +10,8 @@ import { useSelector } from "react-redux";
 import styles from "./map.module.css";
 import { Button } from "@/app/ui/button";
 import Link from "next/link";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Map = () => {
   const { getUserCurrentPosition } = useBrowserGeolocation();
@@ -50,6 +52,7 @@ export const Map = () => {
           <LocationMarker coordinates={coordinates} />
         </MapContainer>
       </div>
+      <ToastContainer position="bottom-left" autoClose={10000} />
     </div>
   );
 };

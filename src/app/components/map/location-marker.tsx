@@ -6,6 +6,7 @@ import L, { LatLngExpression } from "leaflet";
 import { useDispatch } from "react-redux";
 import { setCoordinates } from "../../store/reducers/coordinates";
 import { Location } from "../../model";
+import { toast } from "react-toastify";
 
 const ICON = L.icon({
   iconUrl: "/location-icon.png",
@@ -17,12 +18,17 @@ export function LocationMarker(props: { coordinates: Location }) {
   const map = useMapEvents({
     click(e) {
       map.locate();
-      dispatch(
-        setCoordinates({
-          latitude: e.latlng.lat.toString(),
-          longitude: e.latlng.lng.toString(),
-        })
-      );
+      if (e.latlng.lat && e.latlng.lng) {
+        dispatch(
+          setCoordinates({
+            latitude: e.latlng.lat.toString(),
+            longitude: e.latlng.lng.toString(),
+          })
+        );
+        toast.success(`New location set: ${e.latlng.lat} / ${e.latlng.lng} `);
+      } else {
+        toast.error("There was an error setting the new location");
+      }
     },
   });
   const markerRef = useRef<L.Marker>(null);
