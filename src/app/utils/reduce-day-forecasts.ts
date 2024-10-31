@@ -1,7 +1,9 @@
-import { Forecast, Weather } from "../model";
+import { Forecast, WeatherForecast } from "../model";
 import { utcToJapanTime } from "./utc-to-japan-time";
 
-export default function reduceDayForecasts(weather: Weather): Forecast[] {
+export default function reduceDayForecasts(
+  weather: WeatherForecast
+): Forecast[] {
   if (!Array.isArray(weather)) return [];
 
   const init: Forecast[] = [];
