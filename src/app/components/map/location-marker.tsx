@@ -6,8 +6,8 @@ import L, { LatLngExpression } from "leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import { setCoordinates } from "../../store/reducers/coordinates";
 import { Location } from "../../model";
-import { toast } from "react-toastify";
 import { RootState } from "@/app/store";
+import { toastError, toastSuccess } from "./toast-messages";
 
 const ICON = L.icon({
   iconUrl: "/location-icon.png",
@@ -37,9 +37,12 @@ export function LocationMarker(props: { coordinates: Location }) {
           longitude: e.latlng.lng.toString(),
         })
       );
-      toast.success(`New location set: ${e.latlng.lat} / ${e.latlng.lng} `);
+      toastSuccess({
+        latitude: e.latlng.lat.toFixed(8),
+        longitude: e.latlng.lng.toFixed(8),
+      });
     } else {
-      toast.error("There was an error setting the new location");
+      toastError();
     }
   };
 
@@ -56,9 +59,9 @@ export function LocationMarker(props: { coordinates: Location }) {
               longitude: lng.toString(),
             })
           );
-          toast.success(`New location set: ${lat} / ${lng} `);
+          toastSuccess({ latitude: lat.toFixed(8), longitude: lng.toFixed(8) });
         } else {
-          toast.error("There was an error setting the new location");
+          toastError();
         }
       },
     }),
