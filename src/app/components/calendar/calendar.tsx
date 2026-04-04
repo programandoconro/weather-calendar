@@ -27,9 +27,7 @@ export function Calendar(props: {
   const { getUserCurrentPosition } = useBrowserGeolocation();
 
   useEffect(() => {
-    if (!location.latitude || !location.longitude) {
-      getUserCurrentPosition();
-    }
+    getUserCurrentPosition();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
