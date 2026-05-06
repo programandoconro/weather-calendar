@@ -16,6 +16,7 @@ import { InputSearch } from "@/app/components/map/input-search";
 import "react-toastify/dist/ReactToastify.css";
 import "leaflet/dist/leaflet.css";
 import styles from "./map.module.css";
+import { Spinner } from "@/app/ui/spinner";
 
 export const Map = () => {
   const { getUserCurrentPosition } = useBrowserGeolocation();
@@ -28,7 +29,7 @@ export const Map = () => {
     }
   }, [hasCoordinates, getUserCurrentPosition]);
 
-  if (!hasCoordinates) return <div>Error getting coordinates</div>;
+  if (!hasCoordinates) return <Spinner />;
 
   const centerLocation: LatLngExpression = {
     lat: Number(coordinates.latitude),
