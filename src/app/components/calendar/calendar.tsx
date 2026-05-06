@@ -25,8 +25,13 @@ export function Calendar(props: {
   const { initialForecast, initialCurrentWeather } = props;
   const location = useSelector((state: RootState) => state.coordinates);
   const { getUserCurrentPosition } = useBrowserGeolocation();
+  const coordinates = useSelector((state: RootState) => state.coordinates);
+  const hasUpdatedCoordinates =
+    coordinates.latitude !== process.env.LAT &&
+    coordinates.longitude !== process.env.LON;
 
   useEffect(() => {
+    if (hasUpdatedCoordinates) return;
     getUserCurrentPosition();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

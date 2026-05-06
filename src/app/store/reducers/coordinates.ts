@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: Location = {
   // Dummy Initial Coors
-  latitude: process.env.LAT || "35.6895",
-  longitude: process.env.LON || "139.6917",
+  latitude: process.env.LAT as string,
+  longitude: process.env.LON as string,
 };
 
 const coordinatesSlice = createSlice({
