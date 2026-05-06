@@ -3,9 +3,9 @@ import { OpenStreetMapProvider } from "leaflet-geosearch";
 import { SearchResult } from "leaflet-geosearch/dist/providers/provider.js";
 
 import styles from "./input-search.module.css";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setCoordinates } from "@/app/store/reducers/coordinates";
+import { toastSuccess } from "../toast-messages";
 
 export const InputSearch = () => {
   const provider = new OpenStreetMapProvider();
@@ -22,14 +22,16 @@ export const InputSearch = () => {
       (result) => result.label === inputValue
     );
     if (selectedOption) {
+      const latitude = selectedOption.y.toString();
+      const longitude = selectedOption.x.toString();
       dispatch(
         setCoordinates({
-          latitude: selectedOption.y.toString(),
-          longitude: selectedOption.x.toString(),
+          latitude,
+          longitude,
         })
       );
       setInputValue("");
-      toast.success(`Selected: ${selectedOption.label}`);
+      toastSuccess({ latitude, longitude });
     }
   };
 
