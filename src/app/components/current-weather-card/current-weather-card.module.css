@@ -33,6 +33,7 @@
   color: var(--dark-purple);
   font-weight: 600;
   width: fit-content;
+  white-space: nowrap;
   opacity: 0;
 }
 

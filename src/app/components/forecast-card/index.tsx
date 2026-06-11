@@ -23,7 +23,7 @@ export default function ForecastCard(props: { forecast: Forecast }) {
 
       <div className={styles.description}>
         <div className={styles.popup} role="dialog">
-          {description}{rain ? ` · ${rain.toFixed(1)} mm` : ""}
+          {description}{rain ? <span style={{ textTransform: "none" }}>{` · ${rain.toFixed(1)} mm`}</span> : ""}
         </div>
         <WeatherIcon icon={icon} />
       </div>
