@@ -7,7 +7,8 @@ import Wind from "@/app/ui/wind";
 
 export default function ForecastCard(props: { forecast: Forecast }) {
   const { forecast } = props;
-  const { dt_txt, description, temp, icon, wind, rain, pop } = forecast;
+  const { dt_txt, description, temp, icon, wind, rain, pop, main } = forecast;
+  const isPrecip = ["Rain", "Drizzle", "Snow", "Thunderstorm"].includes(main);
   const time = dt_txt.toLocaleString().split(",")[1];
   const meridium = time.substring(time.length - 3, time.length);
   const formattedTime = time.substring(0, time.length - 6) + meridium;
@@ -24,10 +25,10 @@ export default function ForecastCard(props: { forecast: Forecast }) {
       <div className={styles.description}>
         <div className={styles.popup} role="dialog">
           {description}
-          {(pop || rain) ? (
+          {(isPrecip && pop) || rain ? (
             <span style={{ textTransform: "none", display: "block" }}>
-              {pop ? `${Math.round(pop * 100)}%` : ""}
-              {pop && rain ? " · " : ""}
+              {isPrecip && pop ? `${Math.round(pop * 100)}%` : ""}
+              {isPrecip && pop && rain ? " · " : ""}
               {rain ? `${rain.toFixed(1)} mm` : ""}
             </span>
           ) : ""}
