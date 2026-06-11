@@ -21,7 +21,8 @@ export default function CurrentWeatherCard(props: {
       <div className={styles.icon}>
         <WeatherIcon icon={icon} />
         <div className={styles.popup} role="dialog">
-          {description}{rain ? <span style={{ textTransform: "none" }}>{` · ${rain.toFixed(1)} mm`}</span> : ""}
+          {description}
+          {rain ? <span style={{ textTransform: "none", display: "block" }}>{rain.toFixed(1)} mm</span> : ""}
         </div>
       </div>
       <Temperature temperature={currentWeather.main.temp} />
