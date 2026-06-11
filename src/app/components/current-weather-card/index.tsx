@@ -10,6 +10,7 @@ export default function CurrentWeatherCard(props: {
 }) {
   const { currentWeather } = props;
   const { icon, description, main } = currentWeather.weather[0];
+  const rain = currentWeather.rain?.["1h"];
 
   return (
     <div
@@ -20,7 +21,7 @@ export default function CurrentWeatherCard(props: {
       <div className={styles.icon}>
         <WeatherIcon icon={icon} />
         <div className={styles.popup} role="dialog">
-          {description}
+          {description}{rain ? ` · ${rain.toFixed(1)} mm` : ""}
         </div>
       </div>
       <Temperature temperature={currentWeather.main.temp} />

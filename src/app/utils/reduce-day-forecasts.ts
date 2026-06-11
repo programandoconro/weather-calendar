@@ -17,6 +17,7 @@ export default function reduceDayForecasts(
       wind: current.wind.speed,
       description: current.weather[0].description,
       main: current.weather[0].main,
+      rain: current.rain?.["3h"],
     });
 
     return acc;
