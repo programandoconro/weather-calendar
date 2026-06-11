@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import { SearchResult } from "leaflet-geosearch/dist/providers/provider.js";
 
@@ -6,74 +6,108 @@ import styles from "./input-search.module.css";
 import { useDispatch } from "react-redux";
 import { setCoordinates } from "@/app/store/reducers/coordinates";
 import { toastSuccess } from "../toast-messages";
+import { useRecentSearches } from "@/app/hooks/use-recent-searches";
 
 export const InputSearch = () => {
-  const provider = new OpenStreetMapProvider();
+  const provider = new OpenStreetMapProvider({ params: { "accept-language": "ja,en" } });
   const dispatch = useDispatch();
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [inputValue, setInputValue] = useState("");
-  const [mounted, setMounted] = useState(false);
+  const [showRecents, setShowRecents] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isComposingRef = useRef(false);
+  const { recents, addRecent } = useRecentSearches();
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-  const handleSelectedOption = (results: SearchResult[]) => {
-    const selectedOption = results.find(
-      (result) => result.label === inputValue
-    );
-    if (selectedOption) {
-      const latitude = selectedOption.y.toString();
-      const longitude = selectedOption.x.toString();
-      dispatch(
-        setCoordinates({
-          latitude,
-          longitude,
-        })
-      );
-      setInputValue("");
-      toastSuccess({ latitude, longitude });
-    }
+  const applyLocation = (label: string, latitude: string, longitude: string) => {
+    dispatch(setCoordinates({ latitude, longitude }));
+    addRecent({ label, latitude, longitude });
+    setInputValue("");
+    setSearchResults([]);
+    setShowRecents(false);
+    toastSuccess({ latitude, longitude });
   };
 
-  useEffect(() => {
-    if (!mounted) {
-      setMounted(true);
-      // Avoid calling the API on the first render
+  const triggerSearch = (value: string) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (!value.trim()) {
+      setSearchResults([]);
       return;
     }
-    const debouncedSearch = setTimeout(async () => {
-      // TODO: Handle wrong data from the API with zod
-      const results = await provider.search({ query: inputValue });
+    debounceRef.current = setTimeout(async () => {
+      const results = await provider.search({ query: value });
       setSearchResults(results);
-      handleSelectedOption(results);
     }, 500);
+  };
 
-    return () => {
-      clearTimeout(debouncedSearch);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputValue]);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setShowRecents(false);
+    // Don't search while IME is composing (Japanese/Chinese input)
+    if (!isComposingRef.current) {
+      triggerSearch(value);
+    }
+  };
+
+  const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+    isComposingRef.current = false;
+    triggerSearch((e.target as HTMLInputElement).value);
+  };
+
+  const handleSelect = (result: SearchResult) => {
+    applyLocation(result.label, result.y.toString(), result.x.toString());
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchResults.length > 0) {
+      handleSelect(searchResults[0]);
+    }
+  };
 
   return (
     <div className={styles.search}>
       <input
-        type="search"
-        list="datalist"
+        type="text"
         className={styles.input}
-        onChange={handleSearch}
+        onChange={handleChange}
+        onCompositionStart={() => { isComposingRef.current = true; }}
+        onCompositionEnd={handleCompositionEnd}
+        onKeyDown={handleKeyDown}
+        onFocus={() => setShowRecents(true)}
+        onBlur={() => setTimeout(() => { setShowRecents(false); setSearchResults([]); }, 150)}
         placeholder="Search for a location"
         value={inputValue}
         autoComplete="off"
       />
-      <datalist id="datalist" className={styles.dropdown}>
-        {searchResults.map((result, index) => (
-          <option
-            className={styles.option}
-            key={`${result.label}_${index}`}
-            value={result.label}
-          />
-        ))}
-      </datalist>
+
+      {searchResults.length > 0 && (
+        <ul className={styles.dropdown}>
+          {searchResults.map((result, index) => (
+            <li
+              key={`${result.label}_${index}`}
+              className={styles.option}
+              onMouseDown={() => handleSelect(result)}
+            >
+              {result.label}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {showRecents && searchResults.length === 0 && recents.length > 0 && (
+        <ul className={styles.dropdown}>
+          <li className={styles.recentsHeader}>Recent searches</li>
+          {recents.map((r) => (
+            <li
+              key={r.label}
+              className={styles.option}
+              onMouseDown={() => applyLocation(r.label, r.latitude, r.longitude)}
+            >
+              {r.label}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
