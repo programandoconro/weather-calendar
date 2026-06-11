@@ -19,6 +19,8 @@ export default function reduceDayForecasts(
       main: current.weather[0].main,
       rain: current.rain?.["3h"],
       pop: current.pop,
+      feelsLike: current.main.feels_like,
+      humidity: current.main.humidity,
     });
 
     return acc;

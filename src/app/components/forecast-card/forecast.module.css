@@ -15,38 +15,6 @@
   margin-left: 70px;
 }
 
-.forecast .description:hover {
-  .popup {
-    opacity: 1;
-  }
-}
-
-.forecast .description {
-  max-height: 50px;
-  position: relative;
-}
-
-.forecast .description img {
-  transform: translateY(2px);
-}
-
-.forecast .popup {
-  top: 0%;
-  left: 100%;
-  border: none;
-  padding: 5px;
-  border-radius: 5px;
-  position: absolute;
-  transition: opacity 0.3s ease-in-out;
-  background-color: whitesmoke;
-  color: var(--dark-purple);
-  font-weight: 600;
-  width: fit-content;
-  white-space: nowrap;
-  opacity: 0;
-  text-transform: capitalize;
-}
-
 @media (max-width: 600px) {
   .forecast {
     display: flex;

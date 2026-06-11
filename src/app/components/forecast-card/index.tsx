@@ -4,14 +4,28 @@ import { weatherBackgroundColor } from "../../utils/weather-background-color";
 import WeatherIcon from "@/app/ui/weather-icon";
 import Temperature from "@/app/ui/temperature";
 import Wind from "@/app/ui/wind";
+import { Popup } from "@/app/ui/popup";
 
 export default function ForecastCard(props: { forecast: Forecast }) {
   const { forecast } = props;
-  const { dt_txt, description, temp, icon, wind, rain, pop, main } = forecast;
+  const { dt_txt, description, temp, icon, wind, rain, pop, main, feelsLike, humidity } = forecast;
   const isPrecip = ["Rain", "Drizzle", "Snow", "Thunderstorm"].includes(main);
   const time = dt_txt.toLocaleString().split(",")[1];
   const meridium = time.substring(time.length - 3, time.length);
   const formattedTime = time.substring(0, time.length - 6) + meridium;
+
+  const weatherPopupContent = (
+    <span style={{ textTransform: "capitalize" }}>
+      {description}
+      {(isPrecip && pop) || rain ? (
+        <span style={{ textTransform: "none", display: "block" }}>
+          {isPrecip && pop ? `${Math.round(pop * 100)}%` : ""}
+          {isPrecip && pop && rain ? " · " : ""}
+          {rain ? `${rain.toFixed(1)} mm` : ""}
+        </span>
+      ) : ""}
+    </span>
+  );
 
   return (
     <div
@@ -22,21 +36,11 @@ export default function ForecastCard(props: { forecast: Forecast }) {
     >
       <h5 className={styles.time}>{formattedTime}</h5>
 
-      <div className={styles.description}>
-        <div className={styles.popup} role="dialog">
-          {description}
-          {(isPrecip && pop) || rain ? (
-            <span style={{ textTransform: "none", display: "block" }}>
-              {isPrecip && pop ? `${Math.round(pop * 100)}%` : ""}
-              {isPrecip && pop && rain ? " · " : ""}
-              {rain ? `${rain.toFixed(1)} mm` : ""}
-            </span>
-          ) : ""}
-        </div>
+      <Popup content={weatherPopupContent}>
         <WeatherIcon icon={icon} />
-      </div>
+      </Popup>
 
-      <Temperature temperature={temp} />
+      <Temperature temperature={temp} feelsLike={feelsLike} humidity={humidity} />
       <Wind wind={wind} />
     </div>
   );

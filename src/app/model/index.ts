@@ -7,6 +7,8 @@ export const weatherForecastSchema = z.array(
     dt_txt: z.string(),
     main: z.object({
       temp: z.number(),
+      feels_like: z.number(),
+      humidity: z.number(),
     }),
     weather: z.array(
       z.object({
@@ -34,6 +36,8 @@ export const currentWeatherSchema = z.object({
   ),
   main: z.object({
     temp: z.number(),
+    feels_like: z.number(),
+    humidity: z.number(),
   }),
   wind: z.object({
     speed: z.number(),
@@ -50,6 +54,8 @@ export type Forecast = {
   main: string;
   rain?: number;
   pop?: number;
+  feelsLike: number;
+  humidity: number;
 };
 
 export type Hours = number;

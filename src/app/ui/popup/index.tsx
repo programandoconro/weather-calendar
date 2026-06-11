@@ -1,5 +1,11 @@
 import styles from "./popup.module.css";
 
+type Props = {
+  content: React.ReactNode;
+  position?: "left" | "right";
+  children: React.ReactNode;
+};
+
 export const Popup = ({ content, children, position = "right" }: Props) => {
   const translate =
     position === "left" ? "translateX(-35px)" : "translateX(35px)";
@@ -15,10 +21,4 @@ export const Popup = ({ content, children, position = "right" }: Props) => {
       </div>
     </div>
   );
-};
-
-type Props = {
-  content: string;
-  position?: "left" | "right";
-  children: React.ReactNode;
 };
