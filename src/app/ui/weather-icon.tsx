@@ -7,6 +7,7 @@ export default function WeatherIcon(props: { icon: string }) {
       height={50}
       src={`http://openweathermap.org/img/w/${props.icon}.png`}
       alt={`Weather icon ${props.icon}`}
+      style={{ objectFit: "contain", objectPosition: "center bottom" }}
     />
   );
 }
