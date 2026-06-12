@@ -1,12 +1,4 @@
-export default function Wind(props: { wind: number }) {
-  const wind = Math.floor(props.wind * 3.6);
-  return (
-    <h5
-      style={{
-        transform: "translateY(5px)",
-      }}
-    >
-      ༄ {wind} Km/h
-    </h5>
-  );
+export default function Wind({ wind }: { wind: number }) {
+  const kmh = Math.floor(wind * 3.6);
+  return <h5><span style={{ lineHeight: 1 }}>༄</span> {kmh} Km/h</h5>;
 }

@@ -13,8 +13,12 @@ export default function reduceDayForecasts(
     acc.push({
       dt_txt: dtTxt,
       temp: current.main.temp,
+      feelsLike: current.main.feels_like,
+      humidity: current.main.humidity,
       icon: current.weather[0].icon,
       wind: current.wind.speed,
+      windDeg: current.wind.deg,
+      windGust: current.wind.gust,
       description: current.weather[0].description,
       main: current.weather[0].main,
       rain: current.rain?.["3h"],
