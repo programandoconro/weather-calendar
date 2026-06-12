@@ -25,7 +25,7 @@ export default function Wind({ wind, gust, deg }: Props) {
 
   return (
     <Popup content={content} position="left">
-      <h5 style={{ transform: "translateY(5px)" }}>༄ {kmh} km/h</h5>
+      <h5>༄ {kmh} km/h</h5>
     </Popup>
   );
 }
