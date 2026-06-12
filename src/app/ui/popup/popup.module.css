@@ -27,6 +27,13 @@
   pointer-events: auto;
 }
 
+/* anchor to right edge on SP to avoid overflow */
+.container .popup.left {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
 /* on larger screens, float to the side instead */
 @media (min-width: 600px) {
   .container .popup.right {
