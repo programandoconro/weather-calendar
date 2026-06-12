@@ -7,15 +7,12 @@ type Props = {
 };
 
 export const Popup = ({ content, children, position = "right" }: Props) => {
-  const translate =
-    position === "left" ? "translateX(-35px)" : "translateX(35px)";
   return (
     <div className={styles.container}>
       <div className={styles.children}>{children}</div>
       <div
-        className={styles.popup}
+        className={`${styles.popup} ${position === "left" ? styles.left : styles.right}`}
         role="dialog"
-        style={{ transform: translate }}
       >
         {content}
       </div>
