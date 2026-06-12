@@ -19,10 +19,8 @@
   left: 100%;
 }
 
-@media (min-width: 500px) {
-  .container:hover .popup {
-    opacity: 1;
-  }
+.container:hover .popup {
+  opacity: 1;
 }
 
 @media (max-width: 300px) {
