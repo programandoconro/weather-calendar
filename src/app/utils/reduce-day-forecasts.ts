@@ -15,6 +15,8 @@ export default function reduceDayForecasts(
       temp: current.main.temp,
       icon: current.weather[0].icon,
       wind: current.wind.speed,
+      windGust: current.wind.gust,
+      windDeg: current.wind.deg,
       description: current.weather[0].description,
       main: current.weather[0].main,
       rain: current.rain?.["3h"],

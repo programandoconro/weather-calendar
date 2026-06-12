@@ -36,7 +36,7 @@ export default function CurrentWeatherCard(props: {
         feelsLike={currentWeather.main.feels_like}
         humidity={currentWeather.main.humidity}
       />
-      <Wind wind={currentWeather.wind.speed} />
+      <Wind wind={currentWeather.wind.speed} gust={currentWeather.wind.gust} deg={currentWeather.wind.deg} />
     </div>
   );
 }

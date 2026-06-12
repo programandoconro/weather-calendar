@@ -8,7 +8,7 @@ import { Popup } from "@/app/ui/popup";
 
 export default function ForecastCard(props: { forecast: Forecast }) {
   const { forecast } = props;
-  const { dt_txt, description, temp, icon, wind, rain, pop, main, feelsLike, humidity } = forecast;
+  const { dt_txt, description, temp, icon, wind, windGust, windDeg, rain, pop, main, feelsLike, humidity } = forecast;
   const isPrecip = ["Rain", "Drizzle", "Snow", "Thunderstorm"].includes(main);
   const time = dt_txt.toLocaleString().split(",")[1];
   const meridium = time.substring(time.length - 3, time.length);
@@ -41,7 +41,7 @@ export default function ForecastCard(props: { forecast: Forecast }) {
       </Popup>
 
       <Temperature temperature={temp} feelsLike={feelsLike} humidity={humidity} />
-      <Wind wind={wind} />
+      <Wind wind={wind} gust={windGust} deg={windDeg} />
     </div>
   );
 }

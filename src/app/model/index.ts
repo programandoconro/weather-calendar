@@ -19,6 +19,8 @@ export const weatherForecastSchema = z.array(
     ),
     wind: z.object({
       speed: z.number(),
+      gust: z.number().optional(),
+      deg: z.number().optional(),
     }),
     rain: z.object({ "3h": z.number() }).optional(),
     pop: z.number().optional(),
@@ -41,6 +43,8 @@ export const currentWeatherSchema = z.object({
   }),
   wind: z.object({
     speed: z.number(),
+    gust: z.number().optional(),
+    deg: z.number().optional(),
   }),
   rain: z.object({ "1h": z.number() }).optional(),
 });
@@ -50,6 +54,8 @@ export type Forecast = {
   temp: number;
   icon: string;
   wind: number;
+  windGust?: number;
+  windDeg?: number;
   description: string;
   main: string;
   rain?: number;
