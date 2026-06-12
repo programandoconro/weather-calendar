@@ -3,7 +3,8 @@
 import styles from "./calendar.module.css";
 import { CurrentWeather, WeatherForecast } from "../../model";
 import Day from "../day";
-import CurrentWeatherCard from "../current-weather-card";
+import WeatherCard from "../weather-card";
+import { currentWeatherToForecast } from "@/app/utils/current-weather-to-forecast";
 import { logError } from "@/app/actions/log-error";
 import {
   fetchCurrentWeather,
@@ -99,7 +100,7 @@ export function Calendar(props: {
       <div className={styles.card}>
         <Header />
         <h2 className={styles.current}>今の天気：</h2>
-        <CurrentWeatherCard currentWeather={currentWeather} />
+        <WeatherCard forecast={currentWeatherToForecast(currentWeather)} label="現在の時間" />
         <h1 className={styles.forecast}>天気予報</h1>
         {forecasts}
       </div>

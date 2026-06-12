@@ -1,4 +1,4 @@
-.forecast {
+.card {
   text-align: center;
   min-width: 150px;
   border-radius: 5px;
@@ -11,26 +11,28 @@
   align-items: center;
 }
 
-.forecast:first-child {
+.card:first-child {
   margin-left: 70px;
 }
 
-.forecast .description:hover {
-  .popup {
-    opacity: 1;
-  }
+.label {
+  margin: 0;
 }
 
-.forecast .description {
+.card .description:hover .popup {
+  opacity: 1;
+}
+
+.card .description {
   max-height: 50px;
   position: relative;
 }
 
-.forecast .description img {
+.card .description img {
   transform: translateY(2px);
 }
 
-.forecast .popup {
+.card .popup {
   top: 0%;
   left: 100%;
   border: none;
@@ -45,10 +47,23 @@
   white-space: nowrap;
   opacity: 0;
   text-transform: capitalize;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* current weather card style on larger screens */
+@media (min-width: 600px) {
+  .card.current {
+    max-width: 500px;
+    margin: 10px auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+  }
 }
 
 @media (max-width: 600px) {
-  .forecast {
+  .card {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -56,21 +71,20 @@
     align-items: center;
     margin: 0 10px;
   }
-  .forecast .time {
+
+  .card .label {
     width: 80px;
     padding: 0;
-  }
-  .forecast .temp {
-    width: 80px;
   }
 }
 
 @media (max-width: 300px) {
-  .forecast {
+  .card {
     display: grid;
     justify-content: center;
   }
-  .forecast .popup {
+
+  .card .popup {
     left: 0%;
     top: -100%;
   }

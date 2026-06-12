@@ -1,7 +1,7 @@
 import { Forecast, WeatherForecast } from "../../model";
 import reduceDayForecasts from "../../utils/reduce-day-forecasts";
 import styles from "./day.module.css";
-import ForecastCard from "../forecast-card";
+import WeatherCard from "../weather-card";
 import { dayOfWeekInJapanese } from "../../utils/day-of-week";
 import { japaneseFormatDate } from "@/app/utils/japanese-format-date";
 
@@ -12,7 +12,7 @@ export default function Day(props: { weather: WeatherForecast | null }) {
   const weatherByDay: Forecast[] = reduceDayForecasts(weather);
 
   const blocks = weatherByDay?.map((forecast, index) => (
-    <ForecastCard forecast={forecast} key={index} />
+    <WeatherCard forecast={forecast} key={index} />
   ));
 
   const firstIncomingDate = new Date(weatherByDay[0]?.dt_txt);
