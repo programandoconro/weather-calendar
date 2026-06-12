@@ -19,6 +19,7 @@ export const weatherForecastSchema = z.array(
       speed: z.number(),
     }),
     rain: z.object({ "3h": z.number() }).optional(),
+    pop: z.number().optional(),
   })
 );
 
@@ -48,6 +49,7 @@ export type Forecast = {
   description: string;
   main: string;
   rain?: number;
+  pop?: number;
 };
 
 export type Hours = number;
