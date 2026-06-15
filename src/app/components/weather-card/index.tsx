@@ -48,15 +48,15 @@ export default function WeatherCard({ forecast, label }: Props) {
       <div className={styles.description}>
         <div className={styles.popup} role="dialog">
           {description}
-          {(rain ||
-            (pop &&
+          {(!!rain ||
+            (!!pop &&
               ["Rain", "Drizzle", "Snow", "Thunderstorm"].includes(
                 weatherMain,
               ))) && (
             <span style={{ textTransform: "none", display: "block" }}>
               {rain ? `${rain.toFixed(1)} mm` : ""}
-              {rain && pop ? " · " : ""}
-              {pop &&
+              {rain && !!pop ? " · " : ""}
+              {!!pop &&
               ["Rain", "Drizzle", "Snow", "Thunderstorm"].includes(weatherMain)
                 ? `${Math.round(pop * 100)}%`
                 : ""}
