@@ -1,16 +1,21 @@
 import { Button } from "@/app/ui/button";
 import { useLocationUpdate } from "./use-location-update";
 import style from "./header.module.css";
-import { useState } from "react";
 import { Popup } from "@/app/ui/popup";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
   const { onClick, isLoading } = useLocationUpdate(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const handleToggleButton = () => {
-    setIsOpen(!isOpen);
+  const router = useRouter();
+
+  const handleOpenMap = () => {
+    if (!navigator.onLine) {
+      alert("インターネット接続がありません。マップを開くにはインターネット接続が必要です。\nNo internet connection. A network connection is required to open the map.");
+      return;
+    }
+    router.push("/map");
   };
+
   return (
     <header className={style.container}>
       <>
@@ -30,18 +35,16 @@ export const Header = () => {
       </>
 
       <Popup content="Open Map" position="left">
-        <Link href="/map">
-          <Button
-            imageProps={{
-              src: "/location-icon.png",
-              width: 35,
-              height: 35,
-              alt: "Open Map",
-              priority: true,
-            }}
-            onClick={handleToggleButton}
-          />
-        </Link>
+        <Button
+          imageProps={{
+            src: "/location-icon.png",
+            width: 35,
+            height: 35,
+            alt: "Open Map",
+            priority: true,
+          }}
+          onClick={handleOpenMap}
+        />
       </Popup>
     </header>
   );
