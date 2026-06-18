@@ -26,10 +26,9 @@ export function Calendar(props: {
   const { initialForecast, initialCurrentWeather } = props;
   const location = useSelector((state: RootState) => state.coordinates);
   const { getUserCurrentPosition } = useBrowserGeolocation();
-  const coordinates = useSelector((state: RootState) => state.coordinates);
   const hasUpdatedCoordinates =
-    coordinates.latitude !== process.env.LAT &&
-    coordinates.longitude !== process.env.LON;
+    location.latitude !== process.env.LAT &&
+    location.longitude !== process.env.LON;
 
   useEffect(() => {
     if (hasUpdatedCoordinates) return;
@@ -44,18 +43,13 @@ export function Calendar(props: {
     keepPreviousData: true,
   };
 
-  const fetchCurrent = () => {
-    return fetchCurrentWeather({ location });
-  };
-  const fetchForecast = () => {
-    return fetchWeatherForecast({ location });
-  };
+  const forecastKey = `forecast:${location.latitude},${location.longitude}`;
+  const currentKey = `current:${location.latitude},${location.longitude}`;
 
   const {
     data: forecast,
     error: forecastError,
-    mutate: mutateForecast,
-  } = useSWR("url for forecast weather in server action", fetchForecast, {
+  } = useSWR(forecastKey, () => fetchWeatherForecast({ location }), {
     ...swrConfiguration,
     fallbackData: initialForecast,
   });
@@ -63,17 +57,10 @@ export function Calendar(props: {
   const {
     data: currentWeather,
     error: currentError,
-    mutate: mutateCurrent,
-  } = useSWR("url for current weather in server action", fetchCurrent, {
+  } = useSWR(currentKey, () => fetchCurrentWeather({ location }), {
     ...swrConfiguration,
     fallbackData: initialCurrentWeather,
   });
-
-  useEffect(() => {
-    mutateCurrent();
-    mutateForecast();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
 
   if (!forecast || !currentWeather) {
     if (forecastError) {
