@@ -15,6 +15,7 @@ const coordinatesSlice = createSlice({
     setCoordinates: (state, action: PayloadAction<Location>) => {
       state.latitude = action.payload.latitude;
       state.longitude = action.payload.longitude;
+      state.label = action.payload.label;
     },
   },
 });

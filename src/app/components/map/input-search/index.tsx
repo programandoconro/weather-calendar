@@ -19,7 +19,7 @@ export const InputSearch = () => {
   const { recents, addRecent } = useRecentSearches();
 
   const applyLocation = (label: string, latitude: string, longitude: string) => {
-    dispatch(setCoordinates({ latitude, longitude }));
+    dispatch(setCoordinates({ latitude, longitude, label }));
     addRecent({ label, latitude, longitude });
     setInputValue("");
     setSearchResults([]);

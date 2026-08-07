@@ -74,4 +74,5 @@ export type LocationState = {
 export type Location = {
   latitude: string;
   longitude: string;
+  label?: string;
 };

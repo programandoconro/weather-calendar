@@ -33,6 +33,7 @@ export default async function Home() {
         <Calendar
           initialForecast={weatherForecast}
           initialCurrentWeather={currentWeather}
+          initialLocation={location}
         />
       </main>
     </div>

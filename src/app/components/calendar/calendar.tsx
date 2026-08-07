@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./calendar.module.css";
-import { CurrentWeather, WeatherForecast } from "../../model";
+import { CurrentWeather, Location, WeatherForecast } from "../../model";
 import Day from "../day";
 import WeatherCard from "../weather-card";
 import { currentWeatherToForecast } from "@/app/utils/current-weather-to-forecast";
@@ -13,6 +13,7 @@ import {
 import { useEffect } from "react";
 import useSWR, { SWRConfiguration } from "swr";
 import { Header } from "../header";
+import { LocationBanner } from "../location-banner";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { useBrowserGeolocation } from "../../hooks/use-browser-geolocation";
@@ -22,8 +23,9 @@ const ONE_MINUTE = 1000 * 60;
 export function Calendar(props: {
   initialForecast: WeatherForecast[];
   initialCurrentWeather: CurrentWeather;
+  initialLocation: Location;
 }) {
-  const { initialForecast, initialCurrentWeather } = props;
+  const { initialForecast, initialCurrentWeather, initialLocation } = props;
   const location = useSelector((state: RootState) => state.coordinates);
   const { getUserCurrentPosition } = useBrowserGeolocation();
   const hasUpdatedCoordinates =
@@ -86,6 +88,7 @@ export function Calendar(props: {
     <div className={styles.calendar}>
       <div className={styles.card}>
         <Header />
+        <LocationBanner initialLocation={initialLocation} />
         <h2 className={styles.current}>今の天気：</h2>
         <WeatherCard forecast={currentWeatherToForecast(currentWeather)} label="現在の時間" />
         <h1 className={styles.forecast}>天気予報</h1>
